@@ -45,8 +45,9 @@ de ambientes empresariais e arquiteturas híbridas.
 
 
 
----Jira Dinis, fornece licença/acessos
+--- Jira Dinis, fornece licença/acessos
 --- Dashboards focado em perfis (Application Owners, IT Ops)
 --- Containers: AKS, ACI, ACR....
 --- Diferença entre as gerações de agentes ...
 --- Uso da IA na percepção do Monitoring
+--- Introdução a integrar com outras ferramentas (Dynatrace, NewRelic, DataDog)
