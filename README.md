@@ -51,3 +51,7 @@ de ambientes empresariais e arquiteturas híbridas.
 --- Diferença entre as gerações de agentes ...
 --- Uso da IA na percepção do Monitoring
 --- Introdução a integrar com outras ferramentas (Dynatrace, NewRelic, DataDog)
+
+
+
+https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview
