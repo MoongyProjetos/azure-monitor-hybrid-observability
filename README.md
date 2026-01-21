@@ -35,7 +35,7 @@ utilizando o **Azure Monitor**, cobrindo:
 ## ⚠️ Pré-requisitos
 
 - Subscrição Azure ativa  
-- Conhecimentos básicos de Azure  
+- Conhecimentos de Azure  
 - Noções de sistemas Windows e/ou Linux  
 
 ---
