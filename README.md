@@ -43,15 +43,3 @@ utilizando o **Azure Monitor**, cobrindo:
 > Material desenvolvido para fins **formativos e educacionais**, alinhado com boas práticas
 de ambientes empresariais e arquiteturas híbridas.
 
-
-<!-- 
---- Jira Dinis, fornece licença/acessos
---- Dashboards focado em perfis (Application Owners, IT Ops)
---- Containers: AKS, ACI, ACR....
---- Diferença entre as gerações de agentes ...
---- Uso da IA na percepção do Monitoring
---- Introdução a integrar com outras ferramentas (Dynatrace, NewRelic, DataDog) -->
-
-
-
-https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview
