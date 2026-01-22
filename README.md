@@ -43,3 +43,6 @@ utilizando o **Azure Monitor**, cobrindo:
 > Material desenvolvido para fins **formativos e educacionais**, alinhado com boas práticas
 de ambientes empresariais e arquiteturas híbridas.
 
+
+---
+Moongy 2026 - Todos os direitos reservados
