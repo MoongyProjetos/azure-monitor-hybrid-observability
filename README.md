@@ -1,6 +1,6 @@
 # Azure Monitor – Hybrid Observability
 
-Este repositório contém os **materiais práticos, exemplos e laboratórios** da formação  
+Este repositório contém os **materiais práticos, exemplos e laboratórios** da formação
 **Azure Monitor para Ambientes Híbridos (Azure + On-Prem)**.
 
 O objetivo é apoiar a implementação de uma **estratégia de observabilidade completa**
@@ -17,26 +17,26 @@ utilizando o **Azure Monitor**, cobrindo:
 
 ## 📦 Conteúdo do Repositório
 
-- `/labs` — Laboratórios práticos passo a passo  
-- `/kql` — Queries KQL reutilizáveis  
-- `/dcr` — Exemplos de Data Collection Rules  
-- `/workbooks` — Templates de Workbooks  
-- `/dashboards` — Dashboards operacionais  
-- `/alerts` — Exemplos de regras de alerta  
+- `/labs` — Laboratórios práticos passo a passo
+- `/kql` — Queries KQL reutilizáveis
+- `/dcr` — Exemplos de Data Collection Rules
+- `/workbooks` — Templates de Workbooks
+- `/dashboards` — Dashboards operacionais
+- `/alerts` — Exemplos de regras de alerta
 - `/docs` — Guias, slides e documentação de apoio
 
 ## 🎯 Público-alvo
 
-- Cloud Engineers  
-- DevOps Engineers  
-- Administradores de Sistemas  
-- Equipas de Operações e SRE  
+- Cloud Engineers
+- DevOps Engineers
+- Administradores de Sistemas
+- Equipas de Operações e SRE
 
 ## ⚠️ Pré-requisitos
 
-- Subscrição Azure ativa  
-- Conhecimentos de Azure  
-- Noções de sistemas Windows e/ou Linux  
+- Subscrição Azure ativa
+- Conhecimentos de Azure
+- Noções de sistemas Windows e/ou Linux
 
 ---
 
@@ -44,13 +44,13 @@ utilizando o **Azure Monitor**, cobrindo:
 de ambientes empresariais e arquiteturas híbridas.
 
 
-
+<!-- 
 --- Jira Dinis, fornece licença/acessos
 --- Dashboards focado em perfis (Application Owners, IT Ops)
 --- Containers: AKS, ACI, ACR....
 --- Diferença entre as gerações de agentes ...
 --- Uso da IA na percepção do Monitoring
---- Introdução a integrar com outras ferramentas (Dynatrace, NewRelic, DataDog)
+--- Introdução a integrar com outras ferramentas (Dynatrace, NewRelic, DataDog) -->
 
 
 

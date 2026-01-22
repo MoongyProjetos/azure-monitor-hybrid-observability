@@ -8,9 +8,11 @@
 
 ## Enquadramento
 
-A crescente adoção de arquiteturas híbridas, combinando infraestruturas on‑premises com serviços cloud, exige uma abordagem integrada de monitorização, observabilidade e resposta a incidentes. O Azure Monitor apresenta‑se como a solução central da Microsoft para recolha, análise e atuação sobre métricas, logs e eventos, permitindo garantir disponibilidade, performance, segurança e controlo de custos.
+A crescente adoção de arquiteturas híbridas, combinando infraestruturas on-premises, cloud pública e plataformas de containers, exige uma abordagem moderna de **observabilidade**, indo além da monitorização tradicional.
 
-Esta ação de formação visa dotar os formandos de competências práticas para implementar e operar o Azure Monitor em ambientes híbridos empresariais, recorrendo a boas práticas amplamente adotadas no mercado.
+O Azure Monitor posiciona-se como a plataforma central da Microsoft para recolha, correlação e análise de métricas, logs e traces, incorporando capacidades de **automação e inteligência artificial** para deteção de anomalias, redução de ruído operacional e apoio à análise de causa raiz.
+
+Esta ação de formação visa dotar os formandos de competências práticas para implementar e operar uma **estratégia de observabilidade moderna**, orientada a perfis (Application Owners, IT Ops / SRE), cobrindo ambientes Azure, infraestruturas híbridas, workloads em containers e integração com ferramentas líderes de mercado.
 
 ---
 
@@ -18,10 +20,13 @@ Esta ação de formação visa dotar os formandos de competências práticas par
 
 No final da ação de formação, os formandos deverão ser capazes de:
 
-* Implementar uma solução de monitorização centralizada com Azure Monitor;
-* Monitorizar aplicações, bases de dados, serviços de armazenamento e servidores on‑prem;
-* Criar alertas, dashboards e workbooks operacionais;
+* Implementar uma solução de observabilidade centralizada com Azure Monitor;
+* Monitorar aplicações, bases de dados, containers e infraestruturas híbridas;
+* Compreender a evolução dos agentes de monitorização e aplicar o Azure Monitor Agent (AMA);
+* Utilizar capacidades de IA para deteção de anomalias e redução de alertas falsos;
+* Criar alertas, dashboards e workbooks orientados a diferentes perfis organizacionais;
 * Integrar notificações e automatizar respostas a incidentes;
+* Integrar o Azure Monitor com outras plataformas de observabilidade;
 * Definir políticas de governance e otimização de custos.
 
 ---
@@ -32,7 +37,7 @@ No final da ação de formação, os formandos deverão ser capazes de:
 * Administradores de sistemas
 * Cloud Engineers
 * DevOps Engineers
-* Equipas de Operações e Suporte
+* Equipes de Operações e Suporte
 
 ---
 
@@ -77,228 +82,294 @@ A avaliação será **contínua e formativa**, incidindo sobre:
 
 ## Programa da Formação
 
-### Dia 1 — Fundamentos do Azure Monitor (4h)
+**Carga horária total:** 20 horas
+**Formato:** 5 dias | 4 horas por dia (2 sessões de 2h, com pausa intermédia)
+
+---
+
+### Dia 1 — Fundamentos do Azure Monitor e Observabilidade Moderna (4h)
 
 **Sessão 1 (2h)**
 
 **Objetivo Geral:**
-Compreender a arquitetura e os conceitos fundamentais do Azure Monitor.
+Compreender os fundamentos do Azure Monitor e os princípios da observabilidade moderna.
 
 **Objetivos Específicos:**
 
 * Identificar os principais componentes do Azure Monitor;
 * Distinguir métricas, logs e dados de diagnóstico;
-* Compreender o fluxo de dados numa arquitetura de monitorização.
+* Compreender o conceito de observabilidade e sua aplicação em ambientes empresariais.
 
 **Conteúdos Programáticos:**
 
 * Arquitetura do Azure Monitor
 * Metrics vs Logs vs Diagnostics
 * Log Analytics Workspace
+* Conceito de Observabilidade Moderna
 
 **Metodologia:**
-Exposição dialogada com demonstrações no Azure Portal.
+Exposição dialogada com demonstrações práticas no Azure Portal.
 
 **Avaliação:**
-Questionamento oral e exercício de identificação do tipo de dado mais adequado para diferentes cenários.
+Questionamento oral orientado e exercício prático de classificação de sinais de monitorização.
 
 ---
 
 **Sessão 2 (2h)**
 
 **Objetivo Geral:**
-Configurar a recolha de dados e compreender como gerar insights operacionais.
+Compreender a evolução dos agentes de monitorização e configurar a recolha moderna de dados.
 
 **Objetivos Específicos:**
 
-* Criar e aplicar Data Collection Rules (DCR);
-* Utilizar Insights e Workbooks;
+* Identificar as diferentes gerações de agentes de monitorização;
+* Compreender o papel do Azure Monitor Agent (AMA);
+* Criar e aplicar Data Collection Rules reutilizáveis.
 * Compreender o funcionamento de alertas.
 
 **Conteúdos Programáticos:**
 
-* Data Collection Rules
-* Azure Monitor Insights
+* Evolução dos agentes (MMA, extensões de diagnóstico, AMA)
+* Azure Monitor Agent
+* Data Collection Rules (DCR)
+* Boas práticas de arquitetura de recolha
 * Introdução a Workbooks
 * Alertas e fluxos operacionais
 
 **Metodologia:**
-Demonstração prática seguida de exercício hands‑on.
+Demonstração técnica seguida de exercício prático guiado.
 
 **Avaliação:**
-Criação de uma DCR funcional com validação de ingestão de dados.
+Criação de uma DCR funcional aplicada a múltiplos recursos com validação de ingestão de dados.
 
 ---
 
-### Dia 2 — Monitorização de Aplicações Azure (4h)
+### Dia 2 — Observabilidade de Aplicações e Uso de IA (4h)
 
 **Sessão 3 (2h)**
 
 **Objetivo Geral:**
-Monitorizar aplicações Azure utilizando Application Insights.
+Monitorar aplicações Azure com foco na experiência do usuário e confiabilidade.
 
 **Objetivos Específicos:**
 
 * Ativar diagnósticos em App Services;
 * Configurar Application Insights;
-* Analisar métricas e telemetria de aplicações.
+* Analisar métricas, logs e traces de aplicações.
 
 **Conteúdos Programáticos:**
 
 * App Services
 * Métricas e logs de aplicação
 * Application Insights
+* Telemetria de aplicações
 
 **Metodologia:**
-Laboratório prático guiado.
+Laboratório prático guiado com análise de cenários reais.
 
 **Avaliação:**
-Identificação de problemas de performance numa aplicação monitorizada.
+Identificação de problemas de performance e fiabilidade numa aplicação monitorada.
 
 ---
 
 **Sessão 4 (2h)**
 
 **Objetivo Geral:**
-Criar alertas eficazes para aplicações críticas.
+Criar alertas eficazes para aplicações críticas e utilizar capacidades de inteligência artificial para deteção proativa de problemas.
 
 **Objetivos Específicos:**
 
 * Criar alertas baseados em métricas e logs;
 * Criar queries KQL;
 * Analisar dados de telemetria.
+* Utilizar Smart Detection no Application Insights;
+* Aplicar thresholds dinâmicos;
+* Reduzir ruído operacional e falsos positivos.
 
 **Conteúdos Programáticos:**
 
 * Alertas de métricas
 * Alertas baseados em logs
 * Queries KQL
+* Smart Detection
+* Anomaly Detection
+* Dynamic Thresholds
+* Análise assistida de causa raiz
 
 **Metodologia:**
-Hands‑on com construção incremental de alertas.
+Hands‑on com construção incremental de alertas
+Hands-on com simulação de falhas e análise assistida por IA.
 
 **Avaliação:**
-Criação de um alerta funcional para um cenário definido.
+Configuração de alertas inteligentes baseados em thresholds dinâmicos para um cenário definido.
 
 ---
 
-### Dia 3 — Azure SQL e Storage Accounts (4h)
+### Dia 3 — Dados, Storage e Containers (4h)
 
 **Sessão 5 (2h)**
 
 **Objetivo Geral:**
-Monitorizar bases de dados Azure SQL.
+Monitorar serviços de dados e armazenamento em Azure.
 
 **Objetivos Específicos:**
 
-* Analisar métricas DTU/vCore;
-* Utilizar Query Store;
+* Analisar métricas DTU/vCore em Azure SQL;
+* Utilizar Query Store e SQL Insights;
+* Monitorar Storage Accounts.
 * Configurar SQL Insights.
 
+**Conteúdos Programáticos:**
+
+* Azure SQL
+* Query Store
+* SQL Insights
+* Storage Accounts
+* Métricas e logs de storage
+
 **Metodologia:**
-Exercícios práticos e análise de métricas reais.
+Exercícios práticos com análise de métricas reais.
 
 **Avaliação:**
-Resolução de um problema de performance em Azure SQL.
+Resolução de um problema de performance em Azure SQL ou Storage.
 
 ---
 
 **Sessão 6 (2h)**
 
 **Objetivo Geral:**
-Monitorizar Storage Accounts e garantir a sua disponibilidade.
+Monitorar workloads baseados em containers e Storage Accounts e garantir a sua disponibilidade.
 
 **Objetivos Específicos:**
 
 * Monitorizar latência e disponibilidade;
 * Identificar situações de throttling;
 * Criar dashboards operacionais.
+* Monitorar clusters AKS;
+* Analisar métricas e logs de containers;
+* Monitorar ACI e ACR.
+
+**Conteúdos Programáticos:**
+
+* Storage Accounts
+* Azure Kubernetes Service (AKS)
+* Container Insights
+* Azure Container Instances (ACI)
+* Azure Container Registry (ACR)
 
 **Metodologia:**
-Laboratório prático.
+Laboratório prático com análise de falhas em workloads containerizados.
 
 **Avaliação:**
-Criação de um dashboard funcional de Storage.
+Identificação e análise de problema num workload em AKS.
 
 ---
 
-### Dia 4 — Infraestrutura On‑Prem com Azure Arc (4h)
+### Dia 4 — Infraestrutura Híbrida, Azure Arc e Estratégia de Agentes (4h)
 
 **Sessão 7 (2h)**
 
 **Objetivo Geral:**
-Integrar servidores on‑premises no Azure Monitor.
+Integrar e Monitorar infraestrutura híbrida.
 
 **Objetivos Específicos:**
 
 * Compreender o Azure Arc;
-* Efetuar onboarding de servidores;
+* Integrar servidores on-premises;
 * Instalar o Azure Monitor Agent.
+* Aplicar uma estratégia moderna de agentes.
+
+**Conteúdos Programáticos:**
+
+* Conceitos de Azure Arc
+* Onboarding de servidores on-premises
+* Azure Monitor Agent em ambientes híbridos
 
 **Metodologia:**
-Demonstração técnica e hands‑on.
+Demonstração técnica e hands-on guiado.
 
 **Avaliação:**
-Servidor corretamente ligado ao Azure Arc.
+Servidor corretamente integrado ao Azure Arc.
 
 ---
 
 **Sessão 8 (2h)**
 
 **Objetivo Geral:**
-Monitorizar desempenho e eventos em ambientes híbridos.
+Centralizar logs, métricas e alertas em ambientes híbridos.
 
 **Objetivos Específicos:**
 
-* Criar Data Collection Rules;
-* Criar queries KQL;
+* Criar Data Collection Rules avançadas;
+* Criar queries KQL para infraestrutura;
 * Criar alertas de performance.
 
+**Conteúdos Programáticos:**
+
+* Data Collection Rules avançadas
+* KQL para infraestrutura
+* Alertas de performance
+
 **Metodologia:**
-Resolução de cenários práticos.
+Resolução de cenários práticos baseados em ambientes reais.
 
 **Avaliação:**
-Criação de um alerta funcional para Arc Machines.
+Criação de alerta funcional para infraestrutura híbrida.
 
 ---
 
-### Dia 5 — Dashboards, Integrações, Governance e Custos (4h)
+### Dia 5 — Dashboards por Perfil, Integrações e Governance (4h)
 
 **Sessão 9 (2h)**
 
 **Objetivo Geral:**
-Criar visões operacionais e integrar alertas.
+Criar visões operacionais orientadas a diferentes perfis organizacionais.
 
 **Objetivos Específicos:**
 
-* Criar Workbooks;
-* Criar Dashboards;
-* Integrar alertas com Teams e Jira.
+* Criar dashboards e workbooks para Application Owners;
+* Criar dashboards operacionais para IT Ops / SRE;
+* Compartilhar e publicar dashboards.
+
+**Conteúdos Programáticos:**
+
+* Dashboards orientados a perfis
+* Workbooks por persona
+* Boas práticas de visualização
 
 **Metodologia:**
-Hands‑on intensivo.
+Hands-on intensivo com criação de múltiplos workbooks.
 
 **Avaliação:**
-Workbook operacional criado e partilhado.
+Criação de dois workbooks para perfis distintos.
 
 ---
 
 **Sessão 10 (2h)**
 
 **Objetivo Geral:**
-Garantir governance e otimização de custos.
+Garantir sustentabilidade operacional através de integrações e governance.
 
 **Objetivos Específicos:**
 
-* Controlar custos do Log Analytics;
-* Criar políticas de diagnóstico;
-* Definir um plano de implementação.
+* Integrar Azure Monitor com outras plataformas de observabilidade;
+* Controlar custos e ingestão de dados;
+* Definir um plano de adoção de observabilidade.
+
+**Conteúdos Programáticos:**
+
+* Integração com ferramentas de observabilidade (ex.: Dynatrace, New Relic, Datadog)
+* Estratégia multi-tool
+* Governance e otimização de custos
+* Roadmap de implementação
 
 **Metodologia:**
 Demonstração prática e exercício aplicado.
 
 **Avaliação:**
-Elaboração de um mini plano de implementação de Azure Monitor.
+Elaboração de um mini plano de observabilidade para a organização.
+
+
 
 ---
 
@@ -308,9 +379,3 @@ Elaboração de um mini plano de implementação de Azure Monitor.
 * Laboratórios práticos
 * Documentação oficial Microsoft
 * Slides de apoio
-
----
-
-## Certificação / Comprovativo
-
-Emissão de certificado de frequência mediante participação mínima definida pela entidade formadora.
