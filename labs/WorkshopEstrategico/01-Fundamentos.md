@@ -1,4 +1,4 @@
-# 🧪 Laboratório Hands-on 1 – Fundamentos e Diagnóstico de Observabilidade
+# 🧪 Laboratório Hands-on 1 – Fundamentos e Diagnóstico de Observabilidade: Entender sinais + mapear maturidade
 
 ## 🎯 Objetivos do Laboratório
 
