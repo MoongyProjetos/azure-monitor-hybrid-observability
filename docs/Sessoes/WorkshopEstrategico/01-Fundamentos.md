@@ -72,6 +72,8 @@ Essa diferença é essencial para maturidade operacional.
 
 # 🧱 Os 3 Pilares da Observabilidade Moderna
 
+https://www.youtube.com/watch?v=XN4A-jNZ5Tk&t=63s
+
 ## 📊 Métricas
 
 * Valores numéricos ao longo do tempo

@@ -113,3 +113,17 @@ Labs:
 - Diagramas
 - Melhorar labs com versão mais passo a passo
 - passar perguntas do Lab para o Google Forms
+
+
+
+
+
+https://learn.microsoft.com/en-us/azure/well-architected/reliability/monitoring-alerting-strategy
+
+https://learn.microsoft.com/en-us/azure/azure-monitor/fundamentals/overview
+
+https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/monitor
+
+https://www.youtube.com/watch?v=XN4A-jNZ5Tk&t=63s
+
+https://www.youtube.com/watch?v=v68jL-l9Fww
