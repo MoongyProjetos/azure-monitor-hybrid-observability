@@ -104,3 +104,12 @@ Workbooks
 Falar com Dinis:
 Necessidade de subscricao de treino para todos
 Provisionamento de VM training
+
+
+
+---
+Labs: 
+- Script para criacao (bicep?)
+- Diagramas
+- Melhorar labs com versão mais passo a passo
+- passar perguntas do Lab para o Google Forms

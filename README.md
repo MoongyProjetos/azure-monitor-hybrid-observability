@@ -17,13 +17,13 @@ utilizando o **Azure Monitor**, cobrindo:
 
 ## 📦 Conteúdo do Repositório
 
+- `/docs` — Guias, slides e documentação de apoio
 - `/labs` — Laboratórios práticos passo a passo
 - `/kql` — Queries KQL reutilizáveis
 - `/dcr` — Exemplos de Data Collection Rules
 - `/workbooks` — Templates de Workbooks
 - `/dashboards` — Dashboards operacionais
 - `/alerts` — Exemplos de regras de alerta
-- `/docs` — Guias, slides e documentação de apoio
 
 ## 🎯 Público-alvo
 

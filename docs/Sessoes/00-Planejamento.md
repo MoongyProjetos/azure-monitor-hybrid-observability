@@ -88,7 +88,7 @@
 
 ### 🔹 **Sessão 10 – Integrações, Custos e Governance**
 
-* Integração com Dynatrace, Datadog, New Relic
+* Integração com Dynatrace, Datadog, New Relic, Microsoft Teams
 * Estratégia multi-tool de observabilidade
 * Governance e otimização de custos
 * Roadmap de adoção de observabilidade
