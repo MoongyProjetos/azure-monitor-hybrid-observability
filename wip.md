@@ -99,3 +99,8 @@ Workbooks
 
 ![alt text](image-4.png)
 
+
+
+Falar com Dinis:
+Necessidade de subscricao de treino para todos
+Provisionamento de VM training

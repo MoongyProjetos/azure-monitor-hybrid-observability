@@ -25,7 +25,7 @@
 * Monitorização de App Services
 * Application Insights
 * Métricas, logs e traces de aplicações
-* Telemetria e experiência do utilizador
+* Telemetria e experiência do usuário
 
 ---
 
