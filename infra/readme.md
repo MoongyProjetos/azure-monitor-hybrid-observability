@@ -14,7 +14,7 @@
 
 > ⚠️ Azure Arc (onboarding de servidor on-prem) **não dá pra “criar” totalmente só via Azure**, porque depende de executar script no servidor alvo. No final do script eu deixo o “próximo passo” (gerar onboarding script) pra você rodar quando tiver a máquina.
 
----
+--- 
 
 ## ✅ Script PowerShell (Azure Cloud Shell)
 

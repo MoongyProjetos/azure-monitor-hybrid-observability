@@ -424,3 +424,4 @@ Write-Host " - Vá em Azure Arc > Servers > Add"
 Write-Host " - Gere o script e execute no servidor on-prem/VM"
 Write-Host " - Depois instale AMA e associe uma DCR (dcr-$prefix-base-windows ou dcr-$prefix-critical-infra)"
 Write-Host "==============================="
+
