@@ -1,227 +1,182 @@
 # 📘 Sessão 8 – Logs e Alertas em Ambientes Híbridos
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Configurar Data Collection Rules (DCR) avançadas.
-* Escrever queries KQL para monitoramento de infraestrutura.
-* Criar alertas de performance em ambientes híbridos.
-* Centralizar métricas e logs de múltiplas origens.
+* Aprofundar o uso de Data Collection Rules (DCR) em cenários híbridos.
+* Criar e reutilizar regras de coleta avançadas (padronização organizacional).
+* Desenvolver consultas KQL para investigação de infraestrutura.
+* Criar alertas de performance com base em logs e métricas.
+* Consolidar estratégia de centralização de dados (métricas e logs) com governança.
 
 ---
 
-## 🌐 Observabilidade Unificada em Ambientes Híbridos
+# 🧠 Parte 1 – Por que “Avançado” em DCR é Estratégico?
 
-Após integrar servidores Azure e on-premises via Arc e AMA, o objetivo passa a ser:
+Pergunta para o grupo:
 
-* Coletar dados de forma padronizada
-* Centralizar em um único workspace
-* Consultar com KQL
-* Criar alertas consistentes
+> Hoje vocês conseguem garantir que todo servidor novo coleta os logs mínimos?
 
-Arquitetura típica:
-
-Servidores Azure + Arc
-→ AMA
-→ DCR
-→ Log Analytics
-→ Azure Monitor
-
----
-
-## 🧱 Data Collection Rules Avançadas
+Se a resposta for não, a empresa não tem governança.
 
 DCR avançadas permitem:
 
-* Múltiplos data sources
-* Múltiplos destinos
-* Filtragem de eventos
-* Reutilização em escala
-* Segmentação por tipo de servidor
-
-Exemplos de coleta avançada:
-
-* Apenas eventos críticos
-* Perf counters específicos
-* Logs de aplicações
-* Syslog por severidade
+* Padronização por perfil de servidor (web, banco, infra)
+* Reutilização por ambiente (dev/hml/prod)
+* Controle de ingestão (custo)
+* Auditoria e consistência
 
 ---
 
-## 📊 Exemplos de Configuração Avançada
+# 📜 Data Collection Rules Avançadas
 
-### Windows
+## O que faz uma DCR ser “avançada”?
 
-* CPU %
-* Memory Available
-* Disk % Free
-* Event Logs: System + Application
-* Filtro: Level ≥ Error
+* Coletar múltiplos tipos de sinal (eventos, performance, syslog)
+* Segmentar por workload / perfil
+* Definir destino com clareza (workspace correto)
+* Reutilizar para cloud e on-prem (Arc)
+* Ser fácil de “copiar e colar” como padrão corporativo
 
 ---
 
-### Linux
+## Padrões de DCR (modelo de workshop)
+
+Você pode propor 3 perfis (exemplo):
+
+### 🔹 DCR – Servidor Windows (Base)
+
+* Performance counters essenciais
+* Event Logs críticos
+
+### 🔹 DCR – Servidor Linux (Base)
+
+* Syslog essencial
+* Métricas de CPU/mem/disco
+
+### 🔹 DCR – Servidor Crítico (Extended)
+
+* Mais granularidade
+* Retenção diferenciada (se fizer sentido)
+* Alertas obrigatórios
+
+> 💡 O segredo é: poucas DCR bem definidas > dezenas de DCR aleatórias.
+
+---
+
+# 🔍 Parte 2 – KQL para Infraestrutura
+
+Aqui você ensina KQL com foco 100% operacional.
+
+Nada acadêmico.
+
+## Tipos de perguntas que KQL deve responder:
+
+* “Quais servidores estão com CPU alta há 15 min?”
+* “Quais hosts tiveram reboot hoje?”
+* “Quais máquinas estão sem enviar logs?”
+* “Quais tiveram erro de disco?”
+* “Quais têm pico de memória?”
+
+---
+
+## Mini Framework de KQL (prático)
+
+Toda query operacional costuma ter:
+
+* filtro (`where`)
+* agrupamento (`summarize`)
+* janela de tempo (`bin`)
+* ordenação (`order by`)
+
+---
+
+# 🛠️ Hands-on 1 – Validar Coleta e Saúde de Ingestão
+
+Você faz o grupo responder:
+
+✅ “O servidor X está enviando logs corretamente?”
+✅ “Qual foi o último log recebido?”
+✅ “Existe buraco de ingestão?”
+
+Isso é crucial em ambiente híbrido.
+
+---
+
+# 🚨 Parte 3 – Alertas de Performance
+
+Aqui entra a “operacionalização”.
+
+## Tipos de alertas úteis em híbrido:
+
+### Métricas (rápidos)
 
 * CPU
-* Memory
-* Disk
-* Syslog: Warning+
+* Memória
+* Disco
+
+### Logs/KQL (inteligentes)
+
+* Falta de ingestão (sinal de agente quebrado)
+* Reboots inesperados
+* Erros específicos
+
+Pergunta estratégica:
+
+> Vocês preferem alertar “CPU alta” ou “serviço indisponível”?
+
+A segunda é mais madura.
 
 ---
 
-## 🔎 KQL para Infraestrutura Híbrida
+# 🛠️ Hands-on 2 – Criando Alertas Reais
 
-Com dados centralizados, é possível consultar toda a infraestrutura:
+1. Criar um alerta de métrica para performance
+2. Criar um alerta KQL (ex.: servidor sem logs por X minutos)
+3. Vincular Action Group
+4. Definir severidade
 
-Exemplo – CPU média por servidor:
-
-```kql
-Perf
-| where CounterName == "% Processor Time"
-| summarize avg(CounterValue) by Computer
-| sort by avg_CounterValue desc
-```
+> 💡 Se a empresa sofre com ruído, aqui você implementa “severidade por impacto”.
 
 ---
 
-### Servidores com CPU alta
+# 🧩 Parte 4 – Centralização de Métricas e Logs
 
-```kql
-Perf
-| where CounterName == "% Processor Time"
-| summarize avgCPU=avg(CounterValue) by Computer
-| where avgCPU > 80
-```
+Esse bloco é estratégico.
 
----
+Perguntas para fechar:
 
-### Último heartbeat por servidor
+1. Workspace único ou múltiplos?
+2. Segmentação por ambiente (dev/hml/prod)?
+3. Segmentação por domínio (apps vs infra)?
+4. Retenção padrão? exceções?
+5. O que deve ser obrigatório? o que é opcional?
 
-```kql
-Heartbeat
-| summarize LastSeen=max(TimeGenerated) by Computer
-```
+Você pode anotar decisões e já preencher o documento final.
 
 ---
 
-### Eventos críticos
+# ✅ Conclusão da Sessão
 
-```kql
-Event
-| where EventLevelName == "Error"
-| summarize count() by Computer
-```
+Nesta sessão, consolidamos:
 
----
+* DCR avançadas como base de governança.
+* KQL como ferramenta operacional (não “linguagem de BI”).
+* Alertas reais que evitam ruído.
+* Estratégia de centralização de logs e métricas para ambiente híbrido.
 
-## 🔔 Alertas de Performance Híbrida
+Na próxima sessão, vamos transformar tudo isso em:
 
-Alertas podem ser aplicados a:
-
-* VMs Azure
-* Servidores Arc
-* On-premises
-* Multi-cloud
-
-Tipos:
-
-* Métrica (CPU/memória)
-* Log (KQL)
-* Heartbeat
-* Eventos críticos
+> Dashboards e Workbooks por perfil (Application Owner vs IT Ops / SRE)
 
 ---
 
-## 📈 Exemplo – Alerta CPU Híbrido
+# 🎯 Resultado Esperado da Sessão 8
 
-Baseado em log:
+Ao final desta sessão:
 
-```kql
-Perf
-| where CounterName == "% Processor Time"
-| summarize avgCPU=avg(CounterValue) by Computer, bin(TimeGenerated, 5m)
-| where avgCPU > 80
-```
-
-Aplicável a:
-
-👉 todos os servidores (Azure + Arc)
-
----
-
-## ⚠️ Alerta de Servidor Offline
-
-```kql
-Heartbeat
-| summarize LastSeen=max(TimeGenerated) by Computer
-| where LastSeen < ago(10m)
-```
-
-Detecta:
-
-* VM parada
-* Servidor on-prem offline
-* Falha de agente
-
----
-
-## 📦 Centralização de Métricas e Logs
-
-Benefícios da centralização:
-
-* Visão única da infraestrutura
-* Consultas globais
-* Alertas padronizados
-* Governança
-* Auditoria
-* SRE
-
-Permite responder:
-
-* Qual servidor mais crítico?
-* Qual ambiente mais instável?
-* Onde há saturação?
-* Qual cluster/host falha mais?
-
----
-
-## 🧭 Estratégia de Monitoramento Híbrido
-
-Boas práticas:
-
-* Um workspace central
-* DCR por tipo de servidor
-* Queries reutilizáveis
-* Alertas globais
-* Severidade consistente
-* Tags para segmentação
-
----
-
-## 🧠 Boas Práticas de Alertas em Infraestrutura
-
-* Alertar tendência, não pico isolado
-* Usar média em janela
-* Evitar thresholds arbitrários
-* Cobrir offline e erros críticos
-* Padronizar severidade
-* Reduzir ruído
-
-> 💡 Em ambientes híbridos, consistência é mais importante que ferramenta.
-
----
-
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Configurar DCR avançadas.
-* Usar KQL para infraestrutura híbrida.
-* Criar alertas de performance.
-* Detectar servidores offline.
-* Centralizar logs e métricas.
-
-Na próxima sessão, vamos aplicar esses conceitos na **criação de dashboards e workbooks por perfil operacional**.
-
----
-
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+* A empresa tem um modelo de DCR padronizável.
+* O grupo sabe validar ingestão e saúde do agente.
+* Alertas começam a ser organizados por impacto.
+* A centralização de dados vira decisão arquitetural (não improviso).

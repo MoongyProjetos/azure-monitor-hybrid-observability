@@ -1,214 +1,195 @@
 # 📘 Sessão 5 – Monitorização de Dados e Storage
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Monitorar desempenho e utilização do Azure SQL.
-* Compreender métricas DTU e vCore.
-* Utilizar Query Store e SQL Insights para análise de queries.
-* Monitorar Azure Storage Accounts.
-* Analisar métricas e logs de serviços de dados.
+* Monitorar desempenho e disponibilidade de Azure SQL.
+* Compreender métricas DTU/vCore e seu impacto operacional.
+* Utilizar Query Store e SQL Insights para investigação.
+* Monitorar Storage Accounts e prevenir indisponibilidade.
+* Definir padrão organizacional para observabilidade de dados.
 
 ---
 
-## 🗄️ Observabilidade de Serviços de Dados no Azure
+# 🗄️ Parte 1 – Azure SQL
 
-Serviços de dados são críticos para aplicações modernas e exigem monitoramento contínuo de:
+Pergunta inicial para o grupo:
 
-* Performance de consultas
-* Consumo de recursos
-* Latência de acesso
-* Erros e throttling
-* Capacidade e crescimento
+> Se o banco parar, o que acontece com o negócio?
 
-Perguntas típicas:
+Normalmente a resposta é: tudo para.
 
-* O banco está sobrecarregado?
-* Qual query está lenta?
-* Há gargalo de I/O?
-* O storage está saturado?
+Então monitoramento de dados não é opcional.
 
 ---
 
-## 🧱 Azure SQL – Modelos de Capacidade
+## 📊 Métricas DTU / vCore
 
-O Azure SQL possui dois modelos principais de provisionamento:
+Dependendo do modelo adotado:
 
-### DTU (Database Transaction Unit)
+### 🔹 DTU Model
 
-Modelo agregado de recursos:
+* Percentual de consumo
+* CPU
+* IO
+* Memory
+
+### 🔹 vCore Model
 
 * CPU
-* Memória
-* I/O
+* Data IO
+* Log IO
+* Workers
 
-Exemplo:
+Você precisa explicar:
 
-* S2 = 50 DTUs
-* S4 = 200 DTUs
+> Alta CPU não significa necessariamente problema.
+> Pode significar carga saudável.
 
-Indica capacidade total disponível.
-
----
-
-### vCore
-
-Modelo baseado em recursos dedicados:
-
-* vCPU
-* Memória
-* Storage
-
-Mais previsível e escalável.
+Aqui entra maturidade de análise.
 
 ---
 
-## 📊 Métricas do Azure SQL
+# 🧠 SQL Insights
 
-Principais métricas monitoradas:
+SQL Insights permite:
 
-* CPU %
-* DTU %
-* Data IO %
-* Log IO %
-* Sessions
-* Deadlocks
-* Storage %
+* Visão consolidada de múltiplos bancos
+* Análise de performance
+* Identificação de gargalos
+* Correlação com infraestrutura
 
-Interpretação:
+Pergunta estratégica:
 
-* DTU % alto → saturação geral
-* CPU alto → processamento
-* IO alto → acesso a dados
-* Log IO alto → transações
+> Vocês monitoram o banco ou só esperam o alerta de indisponibilidade?
 
 ---
 
-## 🔎 Query Store
+# 🔍 Query Store
 
-O Query Store armazena histórico de execução de queries no Azure SQL.
-
-Permite:
+Ferramenta essencial para:
 
 * Identificar queries lentas
-* Comparar planos de execução
-* Ver regressões após deploy
-* Analisar consumo de CPU
+* Comparar performance histórica
+* Detectar regressão após deploy
 
-Perguntas que responde:
+Aqui você pode mostrar:
 
-* Qual query mais consome?
-* Qual piorou após mudança?
-* Qual tem maior duração?
+Uma query lenta não é problema de CPU.
+Pode ser problema de índice, plano de execução ou padrão de uso.
 
 ---
 
-## 📈 SQL Insights (Azure Monitor)
+# 🛠️ Hands-on 1 – Investigação de Performance
 
-SQL Insights fornece observabilidade profunda do Azure SQL via Azure Monitor.
+Simular:
 
-Capacidades:
+* Query lenta
+* Pico de DTU
+* Lock ou blocking
 
-* Performance por query
-* Esperas (wait stats)
-* Bloqueios
-* Consumo de CPU/IO
-* Sessões ativas
+Investigar:
 
-Arquitetura:
+1. Métrica indica problema
+2. SQL Insights mostra gargalo
+3. Query Store revela query problemática
 
-Azure SQL → AMA → Log Analytics → SQL Insights
+Isso ensina investigação completa.
 
 ---
 
-## 🧭 Azure Storage – Observabilidade
+# 💾 Parte 2 – Storage Accounts
 
-Storage Accounts suportam:
+Storage é invisível até dar problema.
 
-* Blob
-* Files
-* Queues
-* Tables
+Mas impacta:
 
-Monitoramento cobre:
+* Aplicações
+* Containers
+* Backup
+* Integrações
+
+---
+
+## 📊 Métricas Críticas de Storage
 
 * Latência
-* Throughput
 * Disponibilidade
-* Transações
-* Capacidade
-
----
-
-## 📊 Métricas de Storage
-
-Principais métricas:
-
-* Transactions
-* Availability
-* Success E2E Latency
-* Success Server Latency
+* Throttling
 * Ingress/Egress
-* Capacity
+* Transações
 
-Interpretação:
+Pergunta estratégica:
 
-* Latência alta → gargalo
-* Transactions alto → carga
-* Availability baixa → erro
-* Capacity alto → risco
+> Vocês monitoram latência ou só disponibilidade?
 
 ---
 
-## 📜 Logs de Storage
-
-Logs registram operações:
-
-* Read
-* Write
-* Delete
-* Auth
-* Errors
+# 📄 Logs de Storage
 
 Permitem:
 
-* Auditoria
-* Diagnóstico
-* Segurança
-* Investigação
+* Detectar falhas de acesso
+* Erros 403/404
+* Operações mal sucedidas
+* Analisar uso indevido
 
-Exemplo de perguntas:
+Aqui você conecta com:
 
-* Quem acessou o blob?
-* Qual operação falhou?
-* Qual cliente gera carga?
+Sessão 4 – Alertas inteligentes.
 
 ---
 
-## 🧠 Boas Práticas de Monitorização de Dados
+# 🛠️ Hands-on 2 – Monitorando Storage
 
-* Monitorar DTU/vCore continuamente
-* Alertar saturação sustentada
-* Usar Query Store para regressões
-* Separar CPU vs IO vs Log
-* Monitorar latência de storage
-* Acompanhar crescimento de dados
+1. Criar alerta para throttling
+2. Analisar latência
+3. Criar visualização simples
 
-> 💡 Em dados, o gargalo geralmente está em IO ou queries ineficientes.
+Pergunta estratégica:
 
----
-
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Métricas e capacidade do Azure SQL (DTU/vCore).
-* Uso do Query Store para análise de queries.
-* Observabilidade com SQL Insights.
-* Métricas e logs do Azure Storage.
-* Como identificar gargalos em serviços de dados.
-
-Na próxima sessão, vamos aplicar esses conceitos na **observabilidade de containers e workloads (AKS, ACI, ACR)**.
+> Storage crítico deve ter alerta ou só dashboard?
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🧩 Discussão Estratégica (15 min)
+
+Perguntas importantes:
+
+1. Banco é considerado crítico?
+2. Existe janela de tolerância para lentidão?
+3. Existe monitoramento proativo de query?
+4. Storage tem padrão mínimo de monitoramento?
+5. Quem é responsável por banco?
+
+Aqui você começa a preencher:
+
+Seção 3 e 4 do documento estratégico.
+
+---
+
+# 🧠 Conexão com Próxima Sessão
+
+Agora já monitoramos:
+
+* Aplicações
+* Infra
+* Dados
+
+Próxima etapa:
+
+> Containers e workloads modernos.
+
+Que trazem complexidade adicional.
+
+---
+
+# 🎯 Resultado Esperado da Sessão 5
+
+Ao final desta sessão:
+
+* O grupo entende que banco precisa de monitoramento específico.
+* SQL Insights e Query Store passam a ser vistos como obrigatórios.
+* Storage deixa de ser invisível.
+* A empresa começa a definir padrão mínimo de monitoramento de dados.

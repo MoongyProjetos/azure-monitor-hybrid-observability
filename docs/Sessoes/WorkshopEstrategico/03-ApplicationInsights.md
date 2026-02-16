@@ -1,205 +1,213 @@
 # 📘 Sessão 3 – Observabilidade de Aplicações com Application Insights
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Compreender a monitorização de aplicações no Azure.
-* Configurar Application Insights em App Services.
-* Explorar métricas, logs e traces de aplicações.
-* Analisar telemetria orientada à experiência do utilizador.
+* Compreender a importância da observabilidade no nível da aplicação.
+* Configurar e utilizar Application Insights.
+* Correlacionar métricas, logs e traces de aplicações.
+* Avaliar experiência do usuário com base em telemetria real.
+* Iniciar a definição de padrão organizacional para monitoramento de aplicações.
 
 ---
 
-## ☁️ Monitorização de Aplicações no Azure
+# 🧭 Por que Aplicações são o Centro da Observabilidade?
 
-Aplicações modernas distribuídas exigem visibilidade sobre:
+Infraestrutura pode estar saudável…
 
-* Performance
-* Erros
-* Dependências
-* Experiência do utilizador
-* Fluxos entre serviços
+Mas o usuário pode estar sofrendo.
 
-A observabilidade de aplicações permite responder:
+A pergunta muda de:
 
-* A aplicação está lenta?
-* Onde ocorre o erro?
-* Qual serviço externo está a degradar?
-* Qual endpoint é mais crítico?
+> “O servidor está ok?”
 
----
+para:
 
-## 🔎 O que é Application Insights?
+> “O usuário está conseguindo usar o sistema?”
 
-O Application Insights é o serviço de observabilidade de aplicações do Azure Monitor.
-
-Permite:
-
-* Recolher telemetria automática de aplicações
-* Medir performance e disponibilidade
-* Detetar falhas e exceções
-* Mapear dependências
-* Analisar comportamento do utilizador
-
-Na prática, fornece **APM (Application Performance Monitoring)** no Azure.
+Essa é a virada de maturidade.
 
 ---
 
-## 🧱 Arquitetura de Telemetria de Aplicações
+# ☁️ Monitorização de App Services
 
-Fluxo simplificado:
+## O que monitorar?
 
-**Aplicação / SDK / Agent**
-→ envia telemetria
-→ **Application Insights**
-→ dados em
-**Log Analytics + Metrics**
-→ visualização e análise
+* CPU
+* Memória
+* Requests por segundo
+* Taxa de erro
+* Latência média
+* Disponibilidade
 
-Tipos de recolha:
+Mas isso ainda é nível infraestrutura.
 
-* Instrumentação automática
-* SDK na aplicação
-* OpenTelemetry
+Para maturidade real, precisamos de:
 
----
-
-## 🌐 Monitorização de App Services
-
-O Azure App Service integra nativamente com Application Insights.
-
-Capacidades principais:
-
-* Requests e tempo de resposta
-* Falhas HTTP
-* Exceções
 * Dependências externas
-* CPU e memória
-* Logs de aplicação
-
-Integração típica:
-
-App Service → Application Insights → Log Analytics
+* Exceções
+* Fluxo de requisições
+* Impacto no usuário
 
 ---
 
-## 📊 Métricas, Logs e Traces de Aplicações
+# 🔎 Application Insights
 
-### Métricas de Aplicação
+Application Insights é o componente do Azure Monitor focado em aplicações.
 
-Valores agregados:
+Ele permite:
 
-* Requests/sec
-* Failure rate
-* Response time
-* Availability
-
-Usadas para:
-
-* Dashboards
-* Alertas
-* SLO/SLA
+* Coletar telemetria automaticamente
+* Registrar exceções
+* Mapear dependências
+* Medir tempo de resposta
+* Detectar degradação
+* Correlacionar falhas
 
 ---
 
-### Logs de Aplicação
+## Arquitetura Simplificada
 
-Eventos detalhados:
-
-* Exceptions
-* Traces
-* Custom logs
-* Requests
-
-Consultáveis via KQL:
-
-```kql
-requests
-| take 20
+```
+Aplicação → SDK / Auto-Instrumentação → Application Insights → Log Analytics
 ```
 
+Ele conecta:
+
+* Requests
+* Dependencies
+* Exceptions
+* Traces
+* Custom Events
+
 ---
 
-### Traces Distribuídos
+# 📊 Métricas, Logs e Traces na Aplicação
 
-Fluxo entre componentes:
+Aqui você conecta com a Sessão 1.
 
-* API → serviço → base de dados
-* Microserviços
+## Métricas
+
+* Requests/sec
+* Latência média
+* Percentual de erro
+* Apdex
+
+---
+
+## Logs
+
+* Exceptions
+* Logs estruturados
+* Eventos customizados
+* Auditoria
+
+---
+
+## Traces
+
+* Chamadas entre serviços
 * Dependências externas
-
-Permite:
-
-* Identificar gargalos
-* Latência por componente
-* Cadeia de chamadas
+* Tempo por camada
+* Fluxo completo da requisição
 
 ---
 
-## 👤 Telemetria e Experiência do Utilizador
+# 🧠 Correlação de Dados
 
-Application Insights permite observar:
+Application Insights permite:
 
-* Tempo de resposta percebido
-* Erros por operação
-* Endpoints mais usados
+* Identificar requisição lenta
+* Ver qual dependência atrasou
+* Ver qual exceção ocorreu
+* Identificar padrão recorrente
+
+Isso é investigação moderna.
+
+---
+
+# 👤 Telemetria e Experiência do Usuário
+
+Pergunta estratégica:
+
+> Vocês monitoram infraestrutura ou experiência do usuário?
+
+Application Insights permite medir:
+
+* Tempo real de resposta
 * Falhas por região
-* Sessões de utilizador
+* Comportamento do usuário
+* Performance percebida
 
-Exemplos de perguntas:
+Aqui você pode introduzir:
 
-* Qual página é mais lenta?
-* Qual API falha mais?
-* Qual cliente tem mais erros?
-* A experiência degradou após deploy?
-
----
-
-## 🧭 Principais Vistas do Application Insights
-
-**Overview**
-Saúde geral da aplicação
-
-**Performance**
-Tempo de resposta e operações
-
-**Failures**
-Erros e exceções
-
-**Dependencies**
-Serviços externos
-
-**Application Map**
-Topologia e latências
-
-**Logs**
-Consulta KQL
+* Apdex Score
+* Disponibilidade real
+* Falhas silenciosas
 
 ---
 
-## 🧠 Boas Práticas de Observabilidade de Aplicações
+# 🛠️ Hands-on Estratégico
 
-* Instrumentar desde o início
-* Correlacionar serviços via trace-id
-* Monitorar dependências externas
-* Definir SLOs de latência e erro
-* Separar ambientes (prod/dev)
-* Criar alertas orientados a utilizador
+## Lab 1 – Habilitar Application Insights
 
-> 💡 Observabilidade de aplicações mede o impacto no utilizador, não apenas na infraestrutura.
+* Ativar no App Service
+* Explorar métricas
+* Ver Requests
+* Ver Exceptions
 
 ---
 
-## ✅ Conclusão da Sessão
+## Lab 2 – Analisar uma Falha
 
-Nesta sessão, entendemos:
+Simular:
 
-* O papel do Application Insights na observabilidade de aplicações.
-* A monitorização de App Services no Azure.
-* As diferenças entre métricas, logs e traces de aplicações.
-* Como a telemetria reflete a experiência do utilizador.
+* Erro HTTP 500
+* Dependência lenta
+* Timeout externo
 
-Na próxima sessão, vamos aprofundar a **criação de alertas inteligentes e análise com IA no Application Insights**.
+Investigar:
+
+* Onde começou
+* Qual dependência afetou
+* Impacto no usuário
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🧩 Discussão Estratégica (15 min)
+
+Perguntas críticas:
+
+1. Todas as aplicações críticas devem ter Application Insights?
+2. Existe padrão de telemetria?
+3. Desenvolvedores registram logs estruturados?
+4. Existe métrica de negócio monitorada?
+5. Existe SLA formal?
+
+Aqui você começa a definir padrão organizacional.
+
+---
+
+# 📌 Conexão com Sessão 4
+
+Agora que sabemos:
+
+* Coletar dados
+* Monitorar aplicações
+* Correlacionar sinais
+
+Na próxima sessão vamos responder:
+
+> Como transformar isso em alertas inteligentes e detecção proativa usando IA?
+
+---
+
+# 🎯 Resultado Esperado da Sessão 3
+
+Ao final desta sessão:
+
+* O grupo entende que infraestrutura não é suficiente.
+* Application Insights passa a ser visto como obrigatório para aplicações críticas.
+* A empresa começa a discutir padrão de telemetria.
+* A base para alertas inteligentes está criada.

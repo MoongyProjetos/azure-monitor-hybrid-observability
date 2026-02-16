@@ -1,184 +1,209 @@
-# 📘 Sessão 2 – Azure Monitor Agent, Data Collection Rules e Alertas
+# 📘 Sessão 2 – Azure Monitor Agent, DCR e Alertas
+
+---
 
 ## 🎯 Objetivos da Sessão
 
-* Compreender a evolução dos agentes de monitorização no Azure.
-* Entender o papel do Azure Monitor Agent (AMA) na recolha moderna de dados.
-* Criar e aplicar Data Collection Rules (DCR).
-* Introduzir o modelo de alertas do Azure Monitor.
+* Compreender a evolução dos agentes de monitoramento no Azure.
+* Entender o papel do Azure Monitor Agent (AMA) na arquitetura moderna.
+* Configurar Data Collection Rules (DCR) de forma padronizada.
+* Introduzir alertas como mecanismo operacional estruturado.
+* Iniciar a definição de um modelo padrão de coleta para a empresa.
 
 ---
 
-## 🧭 Evolução dos Agentes de Monitorização no Azure
+# 🔄 Evolução dos Agentes de Monitoramento
 
-A monitorização no Azure evoluiu ao longo do tempo para um modelo mais unificado e flexível.
+Antes de falar de configuração, é importante entender o contexto.
 
-### Gerações anteriores
+## 🟡 1ª Geração – Log Analytics Agent (MMA)
 
-**MMA (Microsoft Monitoring Agent)**
+* Configuração local
+* Dependente de workspace
+* Difícil padronização
+* Modelo legado
 
-* Agente clássico do Log Analytics
-* Configuração por workspace
-* Gestão limitada e menos flexível
+Problemas comuns:
 
-**Extensões de diagnóstico**
-
-* Configuradas por recurso
-* Fragmentação de configuração
+* Falta de governança
+* Configurações inconsistentes
 * Baixa reutilização
 
-Limitações principais:
+---
 
-* Configuração distribuída
-* Difícil governança
-* Pouca reutilização
-* Complexidade operacional
+## 🟠 Extensões de Diagnóstico
+
+* Configuração por recurso
+* Modelo fragmentado
+* Pouca padronização organizacional
 
 ---
 
-## 🚀 Azure Monitor Agent (AMA)
+## 🟢 3ª Geração – Azure Monitor Agent (AMA)
 
-O Azure Monitor Agent é o agente moderno e unificado do Azure Monitor.
+Modelo moderno e recomendado.
 
-Principais características:
+Principais vantagens:
 
-* Configuração centralizada
-* Recolha baseada em regras (DCR)
-* Suporte Azure e híbrido (Arc)
-* Multi-destino de dados
-* Governança e escala
+* Separação entre agente e política de coleta
+* Uso de Data Collection Rules
+* Reutilização de configuração
+* Governança centralizada
+* Integração com Azure Arc
+* Melhor controle de custo
 
-O AMA desacopla:
-
-👉 **onde o agente está**
-👉 **o que ele recolhe**
+> 💡 Estratégia moderna = AMA + DCR como padrão organizacional.
 
 ---
 
-## 🧱 Data Collection Rules (DCR)
+# 🧠 Discussão Estratégica (10–15 min)
 
-As Data Collection Rules definem:
+Perguntas para o grupo:
 
-* Que dados recolher
-* De onde recolher
-* Para onde enviar
+1. Vocês ainda utilizam MMA?
+2. Existe padrão de coleta?
+3. Cada time decide o que enviar para o Log Analytics?
+4. Existe controle de ingestão?
 
-Uma DCR pode incluir:
-
-* Performance counters
-* Event logs
-* Syslog
-* Métricas
-* Logs personalizados
-
-E pode enviar para:
-
-* Log Analytics
-* Metrics
-* Event Hub
-* Storage
+Essa discussão já começa a desenhar a futura estratégia.
 
 ---
 
-## 🔗 Associação DCR → Recursos
+# 🏗️ Azure Monitor Agent (AMA)
 
-Fluxo lógico:
+O AMA é responsável por:
 
-**Recurso / VM / Arc Server**
-→ associado a
-**DCR**
-→ envia dados para
-**Destino (LAW / Metrics / etc.)**
+* Coletar logs e métricas
+* Enviar dados conforme definido pela DCR
+* Suportar ambientes Azure e híbridos
+
+Ele não decide o que coletar.
+Quem decide é a DCR.
+
+Isso é arquitetura moderna.
+
+---
+
+# 📜 Data Collection Rules (DCR)
+
+As DCR definem:
+
+* Quais logs coletar
+* Quais métricas coletar
+* Para qual workspace enviar
+* Frequência e granularidade
+
+Modelo conceitual:
+
+```
+Recurso → AMA → DCR → Workspace
+```
 
 Benefícios:
 
-* Reutilização
-* Consistência
-* Governança
-* Escalabilidade
+* Padronização organizacional
+* Redução de erro humano
+* Facilidade de auditoria
+* Controle de custo
 
 ---
 
-## 🔔 Introdução ao Modelo de Alertas do Azure Monitor
+# 🛠️ Hands-on Estratégico
 
-O Azure Monitor permite criar alertas baseados em:
+## Lab 1 – Criar Log Analytics Workspace
 
-* Métricas
-* Logs
-* Activity Log
-* Service Health
+* Criar workspace
+* Definir retenção
+* Entender impacto no custo
 
-Estrutura de um alerta:
+Pergunta estratégica:
 
-**Signal** → condição
-**Condition** → regra
-**Action Group** → notificação/ação
+> Workspace único para tudo ou segmentado por ambiente?
 
 ---
 
-## 📊 Tipos de Alertas
+## Lab 2 – Criar Data Collection Rule
 
-### Alertas de Métricas
+* Criar DCR
+* Associar a uma VM
+* Validar ingestão
+* Consultar dados via KQL
 
-* Baixa latência
-* Próximo do tempo real
-* Ideal para infraestrutura
+Pergunta estratégica:
 
-Exemplos:
-
-* CPU > 80%
-* Latência > X ms
-* Falhas > N
+> DCR por tipo de workload ou por ambiente?
 
 ---
 
-### Alertas de Logs
+# 🚨 Introdução a Alertas
 
-* Baseados em KQL
-* Alta flexibilidade
-* Contexto rico
-
-Exemplos:
-
-* Erros específicos
-* Eventos críticos
-* Padrões operacionais
+Agora que sabemos coletar dados, precisamos agir sobre eles.
 
 ---
 
-### Alertas de Activity Log
+## O que é um alerta eficaz?
 
-Eventos de controlo do Azure:
+Um alerta deve:
 
-* Delete resource
-* Stop VM
-* Change config
-
----
-
-## 🧠 Boas Práticas de Recolha e Alertas
-
-* Centralizar via DCR
-* Evitar duplicação de dados
-* Separar métricas vs logs
-* Alertar apenas sinais acionáveis
-* Usar severidades consistentes
-
-> 💡 Um bom alerta deve ser acionável e relevante, não apenas informativo.
+* Ser acionável
+* Ter dono
+* Ter contexto
+* Evitar ruído
 
 ---
 
-## ✅ Conclusão da Sessão
+## Tipos de Alertas
 
-Nesta sessão, entendemos:
-
-* A evolução dos agentes de monitorização no Azure.
-* O papel do Azure Monitor Agent (AMA).
-* O conceito e funcionamento das Data Collection Rules.
-* O modelo de alertas do Azure Monitor.
-
-Na próxima sessão, vamos aplicar estes conceitos na **monitorização de aplicações com Application Insights e telemetria moderna**.
+* Baseado em métricas
+* Baseado em logs (KQL)
+* Threshold fixo
+* Threshold dinâmico
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+## Fluxo Operacional
+
+Alerta → Notificação → Ação → Resolução
+
+Perguntas para o grupo:
+
+1. Quem recebe alertas hoje?
+2. Existe Action Group padronizado?
+3. Alertas criam incidente automaticamente?
+4. Existe integração com Teams ou outra ferramenta?
+
+---
+
+# 📊 Introdução a Workbooks
+
+Workbooks permitem:
+
+* Criar visualizações personalizadas
+* Correlacionar dados
+* Criar visão por perfil
+
+Eles serão aprofundados na Sessão 9, mas aqui você mostra:
+
+> Dados só geram valor quando são visualizados corretamente.
+
+---
+
+# 🧠 Encerramento Estratégico da Sessão
+
+Ao final da sessão, o grupo deve refletir:
+
+* Qual será nosso padrão de agente?
+* Como vamos padronizar DCR?
+* Como evitar coleta desnecessária?
+* Como reduzir alert fatigue desde o início?
+
+---
+
+# 📌 Resultado Esperado da Sessão 2
+
+Ao final desta sessão:
+
+* A empresa entende a importância do AMA.
+* O grupo compreende DCR como mecanismo de governança.
+* Alertas começam a ser tratados como processo operacional.
+* A arquitetura base da estratégia começa a se formar.

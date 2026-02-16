@@ -1,146 +1,231 @@
-# 📘 Sessão 1 – Fundamentos da Observabilidade e Azure Monitor
+# 📘 Sessão 1 – Fundamentos do Azure Monitor e Observabilidade
+
+---
 
 ## 🎯 Objetivos da Sessão
 
-* Apresentar a estrutura do curso e os temas que serão abordados.
-* Introduzir os conceitos fundamentais de observabilidade moderna.
-* Compreender o papel do Azure Monitor na estratégia de monitorização.
-* Distinguir métricas, logs e traces em ambientes cloud e híbridos.
+* Nivelar conceitos de observabilidade moderna.
+* Introduzir a arquitetura do Azure Monitor.
+* Distinguir métricas, logs e traces/diagnostics.
+* Mapear o estado atual de monitoramento da empresa.
+* Criar base comum para decisões estratégicas ao longo da semana.
 
 ---
 
-## 🧭 Apresentação do Curso
+# 🧭 Parte 1 – Diagnóstico Inicial (Workshop Estratégico)
 
-### Objetivo Geral
+⏱️ 30–45 minutos
 
-Capacitar profissionais de IT na implementação de uma estratégia moderna de observabilidade utilizando Azure Monitor, permitindo monitorar aplicações, infraestruturas e ambientes híbridos com foco em confiabilidade operacional e experiência do utilizador.
-
-### Metodologia
-
-* **Exposição dialogada** com demonstrações no Azure Portal.
-* **Cenários reais de operações e incidentes**.
-* **Exercícios práticos guiados** ao longo da formação.
-* **Construção progressiva de uma solução de observabilidade**.
+Antes de falar de Azure, você precisa entender onde eles estão.
 
 ---
 
-## 🔎 O que é Observabilidade?
+## 🔎 Perguntas-Chave para o Grupo
 
-Observabilidade é a capacidade de compreender o estado interno de um sistema com base nos dados que ele produz.
+1. O que vocês monitoram hoje?
+2. Qual ferramenta utilizam?
+3. Quem recebe os alertas?
+4. Existe padrão de monitoramento?
+5. Containers já são críticos?
+6. Existe Application Insights ou algo equivalente?
+7. Vocês sofrem com alert fatigue?
+8. Existe SLO formal definido?
 
-Ela permite responder perguntas como:
+Enquanto eles respondem, você organiza no quadro:
+
+```
+Aplicações
+Infraestrutura
+Containers
+On-Prem
+Alertas
+Ferramentas
+Governança
+```
+
+💡 Isso vira o mapa da semana.
+
+---
+
+# 🔎 O que é Observabilidade?
+
+Observabilidade é a capacidade de compreender o estado interno de um sistema com base nos sinais que ele produz.
+
+Ela permite responder:
 
 * O sistema está saudável?
-* Onde está a causa de um problema?
-* O utilizador está a ter uma boa experiência?
-* Como o sistema se comporta sob carga?
-
-A observabilidade moderna baseia-se em três pilares principais:
-
-* **Métricas** → valores numéricos ao longo do tempo (CPU, latência, throughput)
-* **Logs** → registos detalhados de eventos
-* **Traces** → fluxo de execução entre componentes
-
-> 💡 Monitorização diz “algo está errado”.
-> Observabilidade permite entender “por que está errado”.
+* Onde está o problema?
+* O usuário está sendo impactado?
+* O comportamento mudou?
+* Existe degradação silenciosa?
 
 ---
 
-## ☁️ O Papel do Azure Monitor
+## 📌 Monitoramento vs Observabilidade
 
-O Azure Monitor é a plataforma central da Microsoft para recolha, armazenamento, análise e visualização de dados de observabilidade em ambientes cloud e híbridos.
+> Monitoramento diz: “Algo está errado.”
+> Observabilidade responde: “Por que está errado?”
 
-Ele permite:
-
-* **Recolher métricas e logs** de recursos Azure e on-premises
-* **Correlacionar dados de aplicações e infraestrutura**
-* **Detetar anomalias com IA**
-* **Criar alertas e dashboards operacionais**
-* **Analisar incidentes e causa raiz**
-
-Na prática, o Azure Monitor atua como o **“sistema nervoso” operacional** da plataforma Azure.
-
-[Azure Monitor - Fundamentos](https://www.youtube.com/watch?v=XN4A-jNZ5Tk&t=63s)
+Essa diferença é essencial para maturidade operacional.
 
 ---
 
-## 🧱 Arquitetura do Azure Monitor (Visão Geral)
+# 🧱 Os 3 Pilares da Observabilidade Moderna
 
-O Azure Monitor integra múltiplos componentes que trabalham em conjunto:
+## 📊 Métricas
 
-* **Data Sources** → recursos Azure, aplicações, VMs, containers, on-prem
-* **Azure Monitor Agent (AMA)** → recolha moderna de dados
-* **Log Analytics Workspace** → armazenamento e consulta de logs
-* **Metrics Database** → armazenamento de métricas
-* **Application Insights** → telemetria de aplicações
-* **Alerting & Visualization** → alertas, dashboards e workbooks
-
-Esta arquitetura permite uma visão unificada de ambientes:
-
-* Cloud nativa
-* Híbrida
-* Containers
-* Aplicações distribuídas
-
----
-
-## 📊 Métricas vs Logs vs Traces
-
-### Métricas
-
-* Valores numéricos agregados ao longo do tempo
-* Baixa latência e alto desempenho
-* Ideais para alertas e dashboards
+* Valores numéricos ao longo do tempo
+* Alta performance
+* Ideais para alertas
 
 Exemplos:
 
 * CPU
-* Requests/sec
-* Latência média
-* Percentual de erros
+* Latência
+* Requests por segundo
+* Percentual de erro
 
 ---
 
-### Logs
+## 📄 Logs
 
-* Registos detalhados de eventos
-* Contexto rico e consultável (KQL)
-* Ideais para investigação
+* Eventos detalhados
+* Alto contexto
+* Consultáveis via KQL
+* Fundamentais para investigação
 
 Exemplos:
 
-* Erros de aplicação
+* Exceções
 * Eventos de sistema
-* Auditoria
+* Logs de containers
 * Queries SQL
 
 ---
 
-### Traces
+## 🔍 Traces
 
-* Fluxo de execução entre serviços
-* Observabilidade de sistemas distribuídos
-* Identificação de gargalos
+* Fluxo entre serviços
+* Correlação entre componentes
+* Essenciais para sistemas distribuídos
 
 Exemplos:
 
 * Chamadas entre microserviços
 * Dependências externas
-* Tempo por componente
+* Tempo por camada
 
 ---
 
-## ✅ Conclusão da Sessão
+# ☁️ O Papel do Azure Monitor
 
-Nesta primeira sessão, entendemos:
+O Azure Monitor é a plataforma central de observabilidade da Microsoft.
 
-* O conceito e os pilares da observabilidade moderna.
-* O papel do Azure Monitor na monitorização cloud e híbrida.
-* A arquitetura base da plataforma.
-* As diferenças entre métricas, logs e traces.
+Ele permite:
 
-Na próxima sessão, vamos configurar a **recolha moderna de dados com Azure Monitor Agent e Data Collection Rules**, além de introduzir alertas e workbooks.
+* Coletar métricas e logs
+* Correlacionar aplicações e infraestrutura
+* Detectar anomalias com IA
+* Criar alertas acionáveis
+* Construir dashboards operacionais
+
+Na prática, ele funciona como o:
+
+> Sistema nervoso operacional da plataforma Azure.
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🏗️ Arquitetura do Azure Monitor (Visão Estratégica)
+
+## Componentes principais:
+
+* Data Sources (Apps, VMs, AKS, On-Prem)
+* Azure Monitor Agent (AMA)
+* Data Collection Rules
+* Log Analytics Workspace
+* Metrics Store
+* Application Insights
+* Alerting & Workbooks
+
+Fluxo simplificado:
+
+```
+Recurso → Coleta → Armazenamento → Análise → Ação
+```
+
+---
+
+# 🧠 Log Analytics Workspace
+
+É o repositório central de logs.
+
+Ele permite:
+
+* Consultas via KQL
+* Correlação de eventos
+* Base para alertas
+* Base para dashboards
+
+Pergunta estratégica:
+
+> Hoje vocês têm workspace único ou fragmentado?
+
+Isso já prepara terreno para governança.
+
+---
+
+# 🔄 Métricas vs Logs vs Diagnostics
+
+Métricas:
+
+* Baixo custo
+* Alta performance
+* Boa para alertas simples
+
+Logs:
+
+* Alto detalhe
+* Melhor para investigação
+
+Diagnostics:
+
+* Configuração de envio de logs e métricas para destinos específicos
+* Base para padronização organizacional
+
+---
+
+# 🧩 Mini Atividade Prática
+
+Peça para o grupo classificar:
+
+| Cenário                   | Métrica | Log | Trace |
+| ------------------------- | ------- | --- | ----- |
+| CPU alta                  |         |     |       |
+| Erro HTTP 500             |         |     |       |
+| Falha entre microserviços |         |     |       |
+| Query lenta               |         |     |       |
+
+Isso engaja e fixa conceito.
+
+---
+
+# 🧠 Encerramento Estratégico da Sessão
+
+Pergunta final:
+
+> Se vocês tivessem que redesenhar a estratégia de monitoramento hoje, o que manteriam e o que mudariam?
+
+Anote as respostas.
+
+Isso alimenta o documento final.
+
+---
+
+# 📌 Resultado Esperado da Sessão 1
+
+Ao final dessa sessão:
+
+* Todos falam a mesma linguagem.
+* Você entende maturidade real.
+* O grupo começa a pensar estrategicamente.
+* A semana ganha direção.

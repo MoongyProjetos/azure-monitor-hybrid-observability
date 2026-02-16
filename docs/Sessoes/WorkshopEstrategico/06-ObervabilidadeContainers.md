@@ -1,232 +1,216 @@
 # 📘 Sessão 6 – Observabilidade de Containers e Workloads
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Compreender a observabilidade de workloads em containers no Azure.
-* Monitorar clusters do Azure Kubernetes Service (AKS).
-* Utilizar Container Insights para métricas e logs.
+* Compreender os desafios de monitoramento em ambientes containerizados.
+* Monitorar clusters AKS com Container Insights.
+* Analisar métricas e logs de workloads.
 * Monitorar Azure Container Instances (ACI).
-* Analisar disponibilidade e performance de workloads containerizados.
+* Monitorar Azure Container Registry (ACR).
+* Definir padrão organizacional para observabilidade de containers.
 
 ---
 
-## 🧱 Observabilidade em Ambientes Containerizados
+# 🧠 Parte 1 – Por que Containers Mudam a Observabilidade?
 
-Workloads em containers são dinâmicos e distribuídos:
+Pergunta para o grupo:
 
-* Pods efêmeros
-* Escala automática
-* Serviços distribuídos
-* Múltiplos nós
+> O que acontece quando um pod morre?
 
-Desafios de observabilidade:
+Em VM tradicional:
+Você investigava a máquina.
 
-* Identificar falhas por pod
-* Detectar saturação de nós
-* Monitorar rede entre serviços
-* Analisar reinícios e crashes
-* Correlacionar logs e métricas
+Em Kubernetes:
+O pod pode desaparecer.
+Logs podem sumir.
+IP pode mudar.
+Escala pode variar.
 
-Perguntas típicas:
+Container exige:
 
-* Qual pod está falhando?
-* O nó está saturado?
-* O cluster tem capacidade?
-* O serviço está disponível?
+* Monitoramento dinâmico
+* Observabilidade distribuída
+* Correlação entre camadas
 
 ---
 
-## ☸️ Azure Kubernetes Service (AKS)
+# ☸️ Azure Kubernetes Service (AKS)
 
-O AKS é o serviço gerenciado de Kubernetes no Azure.
-
-Componentes monitorados:
+AKS adiciona complexidade:
 
 * Cluster
 * Nodes
 * Pods
 * Containers
-* Deployments
-* Services
+* Namespaces
+* Serviços
+* Ingress
 
-Sinais principais:
+Pergunta estratégica:
 
-* CPU / memória por node
-* CPU / memória por pod
-* Restarts
-* Estado do pod
-* Latência de rede
+> Vocês monitoram cluster ou workload?
 
 ---
 
-## 📊 Container Insights
+# 📊 Container Insights
 
-Container Insights é a solução do Azure Monitor para observabilidade de Kubernetes e containers.
+Container Insights permite:
 
-Coleta:
+* Métricas de node (CPU, memória)
+* Métricas de pod
+* Restart de containers
+* Uso de recursos por namespace
+* Análise de consumo ao longo do tempo
 
-* Métricas de cluster
-* Métricas de nós
-* Métricas de pods
-* Logs de containers
-* Eventos Kubernetes
+Ele conecta:
 
-Arquitetura:
-
-AKS → AMA / agent → Log Analytics → Insights
+Infra + workload + aplicação.
 
 ---
 
-## 🧭 Visões do Container Insights
+## O que Monitorar em AKS?
 
-**Cluster**
-Capacidade e utilização geral
+### 🔹 Nível Cluster
 
-**Nodes**
-CPU/memória por nó
+* Saúde dos nodes
+* Uso de CPU/memória
+* Pressão de recursos
 
-**Controllers**
-Deployments e réplicas
+### 🔹 Nível Pod
 
-**Pods**
-Estado e consumo
+* Restart count
+* CrashLoopBackOff
+* OOMKilled
+* Pending por falta de recurso
 
-**Containers**
-CPU/memória/restarts
+### 🔹 Nível Workload
 
-**Logs**
-Logs de containers
-
----
-
-## 📈 Métricas de Workloads Containerizados
-
-Principais métricas:
-
-* CPU %
-* Memory %
-* Node utilization
-* Pod restarts
-* Pod status
-* Network
-
-Interpretação:
-
-* CPU alto → saturação
-* Memory alto → risco OOM
-* Restarts → instabilidade
-* Pending → falta de capacidade
+* Latência
+* Taxa de erro
+* Consumo anormal
 
 ---
 
-## 📜 Logs de Containers
+# 🛠️ Hands-on 1 – Investigando um Problema em AKS
 
-Logs incluem:
+Simular:
 
-* stdout/stderr
-* erros de aplicação
-* eventos runtime
-* mensagens de health
+* Pod com restart frequente
+* Uso alto de memória
+* Container OOMKilled
 
-Consultáveis via KQL:
+Investigar:
 
-```kql
-ContainerLog
-| take 50
+1. Métrica de consumo
+2. Logs do container
+3. Correlação com aplicação
+
+Isso ensina investigação moderna.
+
+---
+
+# 📦 Azure Container Instances (ACI)
+
+ACI é mais simples, mas precisa monitoramento.
+
+Monitorar:
+
+* Estado do container
+* Logs de execução
+* Falhas de inicialização
+* Consumo de CPU/memória
+
+Pergunta estratégica:
+
+> ACI é workload temporário ou crítico?
+
+Isso define nível de alerta.
+
+---
+
+# 🗂️ Azure Container Registry (ACR)
+
+ACR muitas vezes é ignorado.
+
+Mas impacta:
+
+* Deploy
+* Pipeline
+* Segurança
+
+Monitorar:
+
+* Falhas de pull
+* Latência
+* Tentativas de acesso
+* Uso de armazenamento
+* Segurança de imagem
+
+Pergunta estratégica:
+
+> Existe monitoramento de falhas de pull em produção?
+
+---
+
+# 📈 Disponibilidade e Performance de Workloads
+
+Aqui você conecta tudo:
+
+Aplicação rodando em container precisa:
+
+* Application Insights
+* Container Insights
+* Alertas inteligentes
+* Correlação entre camadas
+
+Modelo ideal:
+
+```
+Aplicação → Application Insights
+Container → Container Insights
+Infra → Métricas do cluster
+Logs → Log Analytics
 ```
 
-Permite:
-
-* Diagnóstico de falhas
-* Erros de aplicação
-* Crash loops
-* Problemas de deploy
+Isso é observabilidade completa.
 
 ---
 
-## 📦 Azure Container Instances (ACI)
+# 🧩 Discussão Estratégica (15 min)
 
-ACI executa containers sem cluster Kubernetes.
+Perguntas importantes:
 
-Observabilidade inclui:
+1. AKS é considerado crítico?
+2. Existe padrão de namespace?
+3. Existe limite de recursos padronizado?
+4. Existe alerta para restart excessivo?
+5. Existe padrão mínimo de monitoramento para novos workloads?
 
-* CPU/memória
-* Estado do container
-* Logs stdout/stderr
-* Exit code
-
-Usado para:
-
-* Jobs
-* Processamento pontual
-* Containers efêmeros
+Aqui você começa a preencher a seção de Containers no documento estratégico.
 
 ---
 
-## 📚 Azure Container Registry (ACR)
+# 🧠 Conexão com Sessão 7
 
-ACR armazena imagens de container.
+Agora você já cobriu:
 
-Monitoramento cobre:
+* Aplicações
+* Dados
+* Containers
 
-* Pulls
-* Pushes
-* Latência
-* Falhas
-* Autenticação
+Próximo passo:
 
-Permite responder:
-
-* Quem puxou imagem?
-* Há falhas de pull?
-* Há gargalo de registry?
+> Expandir para infraestrutura híbrida e padronização organizacional com Azure Arc.
 
 ---
 
-## 📊 Disponibilidade e Performance de Workloads
+# 🎯 Resultado Esperado da Sessão 6
 
-Indicadores principais:
+Ao final desta sessão:
 
-* Pods Running %
-* Restarts
-* Latência
-* Requests falhados
-* Saturação de nós
-
-Sinais de problema:
-
-* Pods Pending
-* CrashLoopBackOff
-* CPU throttling
-* OOMKilled
-
----
-
-## 🧠 Boas Práticas de Observabilidade em Containers
-
-* Monitorar nós e pods separadamente
-* Alertar restarts e crash loops
-* Monitorar capacidade do cluster
-* Correlacionar logs e métricas
-* Versionar imagens no ACR
-* Separar ambientes por cluster
-
-> 💡 Em Kubernetes, disponibilidade depende da saúde dos pods e da capacidade dos nós.
-
----
-
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Observabilidade de workloads em AKS.
-* Uso do Container Insights.
-* Monitoramento de ACI e ACR.
-* Métricas e logs de containers.
-* Indicadores de disponibilidade e performance.
-
-Na próxima sessão, vamos aplicar esses conceitos na **monitorização de infraestrutura híbrida com Azure Arc**.
-
----
-
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+* O grupo entende que container exige estratégia própria.
+* AKS deixa de ser monitorado como VM.
+* Restart e consumo passam a ser sinais críticos.
+* A empresa começa a discutir padrão mínimo para workloads modernos.

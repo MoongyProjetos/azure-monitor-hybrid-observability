@@ -1,30 +1,54 @@
-# 🧪 Laboratório Hands-on 1 – Introdução ao Log Analytics e Métricas no Azure Monitor
+# 🧪 Laboratório Hands-on 1 – Fundamentos e Diagnóstico de Observabilidade
 
 ## 🎯 Objetivos do Laboratório
 
 * Criar um Log Analytics Workspace.
-* Explorar métricas nativas de um recurso Azure.
-* Consultar logs com KQL básico.
-* Correlacionar métricas e logs para análise operacional.
+* Explorar métricas e logs de um recurso Azure.
+* Executar consultas KQL básicas.
+* Correlacionar métricas e logs.
+* Avaliar o modelo atual de monitoramento da empresa.
+* Iniciar definição da arquitetura de observabilidade.
 
 ---
 
 ## ⏱️ Duração Estimada
 
-60–75 minutos
+75–90 minutos
 
 ---
 
-## 📋 Cenário
+## 📋 Cenário Estratégico
 
-Uma equipa de operações pretende começar a monitorizar recursos Azure de forma centralizada.
+A organização deseja estruturar uma estratégia moderna de observabilidade.
 
-O objetivo é:
+Antes de definir padrões, precisamos:
 
-* Criar um workspace de logs
-* Ligar um recurso Azure
-* Explorar métricas e logs
-* Identificar sinais operacionais básicos
+* Entender o modelo atual
+* Criar base técnica mínima
+* Visualizar dados reais
+* Identificar lacunas
+
+Este laboratório servirá como:
+
+> Base prática + diagnóstico inicial.
+
+---
+
+# 🔎 Parte 0 — Diagnóstico Inicial (Workshop – 20 min)
+
+Antes de criar qualquer recurso, responda em grupo:
+
+1. Hoje vocês possuem Log Analytics Workspace?
+2. Workspace único ou múltiplos?
+3. Quem é dono do monitoramento?
+4. Existe padrão de coleta?
+5. Já utilizam Application Insights?
+6. Existem alertas ativos?
+7. Sabem o custo mensal de ingestão?
+
+📌 Registrar respostas no quadro.
+
+Isso alimentará o documento estratégico.
 
 ---
 
@@ -32,131 +56,127 @@ O objetivo é:
 
 ## Passo 1 — Criar o Workspace
 
-1. Acessar o **Azure Portal**
+1. Acessar o Azure Portal
 2. Procurar **Log Analytics workspaces**
 3. Selecionar **Create**
 
-Configuração:
+Configuração sugerida:
 
-* **Subscription:** (sua subscrição)
-* **Resource Group:** rg-monitoring-lab
-* **Name:** law-monitoring-lab
-* **Region:** West Europe
+* Resource Group: rg-observability-workshop
+* Name: law-obs-workshop
+* Região: mesma dos workloads
 
 👉 Criar
 
 ---
 
-## Passo 2 — Explorar o Workspace
+## 🔎 Discussão Estratégica
 
-Após criação:
+Pergunta ao grupo:
 
-Abrir o workspace → menu esquerdo:
+> A organização deve ter:
+>
+> * Um único workspace global?
+> * Um por ambiente (dev/hml/prod)?
+> * Um por domínio (infra/apps)?
 
-* Logs
-* Usage and estimated costs
-* Agents
-* Tables
-
-Explorar separador **Tables**:
-
-Identificar tipos de dados disponíveis:
-
-* Heartbeat
-* AzureActivity
-* InsightsMetrics
+Anotar decisão preliminar.
 
 ---
 
-# Parte 2 — Ligar um Recurso Azure
+# Parte 2 — Ativar Coleta via Diagnostic Settings
 
-## Opção simples (recomendado para formação)
+Escolher um recurso existente:
 
-Usar um recurso existente, por exemplo:
-
-* Storage Account
 * App Service
+* Storage Account
 * VM
 
 ---
 
-## Passo 3 — Ativar Diagnostic Settings
+## Passo 2 — Ativar Diagnostic Settings
 
-1. Abrir o recurso
-2. Menu **Monitoring → Diagnostic settings**
-3. Selecionar **Add diagnostic setting**
+1. Abrir recurso
+2. Monitoring → Diagnostic settings
+3. Add diagnostic setting
 
 Configuração:
 
-* **Name:** send-to-law
-* Selecionar logs e métricas disponíveis
-* Destination: **Log Analytics workspace**
-* Selecionar **law-monitoring-lab**
+* Enviar logs
+* Enviar métricas
+* Destination → Log Analytics Workspace criado
 
 👉 Save
 
 ---
 
-# Parte 3 — Explorar Métricas
+## 🔎 Discussão Estratégica
 
-## Passo 4 — Abrir Métricas
+Perguntar:
 
-No recurso:
-
-**Monitoring → Metrics**
-
-Selecionar:
-
-* Metric namespace
-* Metric
-* Aggregation
-
-Exemplos:
-
-**Storage**
-
-* Transactions
-* Availability
-* Success E2E Latency
-
-**App Service**
-
-* Requests
-* Response time
-* CPU time
+* Todo recurso deve ter diagnostic settings obrigatório?
+* Deve existir Azure Policy para forçar isso?
+* Quais categorias de log são realmente necessárias?
 
 ---
 
-## Exercício
+# Parte 3 — Explorar Métricas
+
+## Passo 3 — Abrir Métricas
+
+Monitoring → Metrics
+
+Selecionar métricas relevantes do recurso.
+
+Exemplos:
+
+App Service:
+
+* Requests
+* Average Response Time
+* HTTP 5xx
+
+Storage:
+
+* Transactions
+* Availability
+* Latency
+
+---
+
+## 🧠 Exercício Analítico
 
 Responder:
 
-1. Qual a métrica com maior variação?
-2. Existe algum pico visível?
-3. Qual o intervalo temporal analisado?
+1. Métrica com maior variação?
+2. Existe pico?
+3. Métrica isolada permite entender causa raiz?
+
+Provocar reflexão:
+
+> Métrica diz “o quê”.
+> Log explica “por quê”.
 
 ---
 
 # Parte 4 — Consultar Logs (KQL)
 
-## Passo 5 — Abrir Logs
-
 Abrir:
 
-Log Analytics Workspace → **Logs**
+Log Analytics Workspace → Logs
 
 ---
 
-## Query 1 — Eventos do Azure
+## Query 1 — AzureActivity
 
 ```kql
 AzureActivity
 | take 50
 ```
 
-Objetivo:
+Pergunta:
 
-Visualizar eventos de controlo (create, update, delete).
+* Houve alteração recente em recurso crítico?
 
 ---
 
@@ -167,13 +187,13 @@ Heartbeat
 | summarize LastSeen = max(TimeGenerated) by Computer
 ```
 
-Objetivo:
+Pergunta:
 
-Ver máquinas que enviaram dados recentemente.
+* Existem máquinas que pararam de enviar dados?
 
 ---
 
-## Query 3 — Métricas no Log Analytics
+## Query 3 — InsightsMetrics
 
 ```kql
 InsightsMetrics
@@ -182,60 +202,85 @@ InsightsMetrics
 
 Objetivo:
 
-Ver métricas armazenadas como logs.
+Visualizar métricas como logs.
 
 ---
 
-# Parte 5 — Correlação Métricas + Logs
+# Parte 5 — Correlação Estratégica
 
-Objetivo: perceber relação entre eventos e comportamento.
-
-## Query — Atividades recentes
+Executar:
 
 ```kql
 AzureActivity
 | where TimeGenerated > ago(1h)
-| sort by TimeGenerated desc
+| summarize count() by bin(TimeGenerated, 5m)
+| render timechart
 ```
 
 Perguntas:
 
-* Houve alterações recentes?
-* Coincidem com picos de métricas?
+* Alterações coincidem com picos?
+* Há evidência de deploy recente?
+* É possível correlacionar evento e comportamento?
+
+---
+
+# 🧠 Momento Estratégico (Muito Importante)
+
+Perguntas finais:
+
+1. Hoje vocês conseguiriam investigar um incidente real usando apenas o que vimos?
+2. Falta padronização?
+3. Falta telemetria?
+4. Falta alerta?
+5. Falta governança?
+
+---
+
+# 📌 Registro para Documento Estratégico
+
+Preencher junto com o grupo:
+
+* Workspace recomendado
+* Modelo preliminar de coleta
+* Lacunas identificadas
+* Riscos atuais
 
 ---
 
 # ✅ Resultados Esperados
 
-No final do laboratório, o formando deverá:
+Ao final do laboratório:
 
-* Ter um Log Analytics Workspace funcional
-* Ter um recurso a enviar logs e métricas
-* Conseguir navegar métricas no portal
-* Executar queries KQL básicas
-* Entender a diferença prática entre métricas e logs
-
----
-
-# 🧠 Discussão Final
-
-Perguntas orientadoras:
-
-* Quando usar métricas vs logs?
-* Qual é mais útil para alertas?
-* Qual é mais útil para investigação?
-* O que ainda falta para observabilidade completa?
+* Workspace funcional criado
+* Recurso enviando logs
+* Queries KQL executadas
+* Diferença prática entre métricas e logs compreendida
+* Lacunas organizacionais identificadas
+* Primeiras decisões arquiteturais iniciadas
 
 ---
 
-# 🚀 Extensão (Opcional)
+# 🚀 Extensão Opcional
 
-Se houver tempo:
-
-Criar gráfico KQL:
+Criar gráfico:
 
 ```kql
 AzureActivity
 | summarize count() by bin(TimeGenerated, 5m)
 | render timechart
 ```
+
+Depois perguntar:
+
+> Isso é suficiente para alertar automaticamente?
+
+---
+
+# 🎯 O que mudou em relação ao modelo antigo?
+
+Antes:
+Aprender Azure Monitor.
+
+Agora:
+Usar Azure Monitor para diagnosticar maturidade da empresa.

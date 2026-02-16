@@ -1,232 +1,196 @@
 # 📘 Sessão 10 – Integrações, Custos e Governance
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Integrar o Azure Monitor com ferramentas externas de observabilidade.
-* Compreender estratégias multi-tool.
-* Aplicar práticas de governance no Azure Monitor.
-* Otimizar custos de ingestão e retenção de dados.
-* Definir um roadmap de adoção de observabilidade.
+* Avaliar integração do Azure Monitor com outras ferramentas.
+* Definir estratégia multi-tool (quando aplicável).
+* Compreender modelo de custos do Log Analytics.
+* Estabelecer diretrizes de governança.
+* Construir roadmap prático de adoção.
+* Consolidar decisões estratégicas da semana.
 
 ---
 
-## 🔗 Integrações do Azure Monitor
+# 🔗 Parte 1 – Integração com Outras Ferramentas
 
-O Azure Monitor pode integrar com plataformas externas para:
+Empresas raramente têm ferramenta única.
 
-* Observabilidade avançada
-* APM complementar
-* NOC/SOC
-* ITSM
-* Colaboração
-
-Principais integrações:
+Ferramentas comuns:
 
 * Dynatrace
 * Datadog
 * New Relic
 * Microsoft Teams
-* ITSM / Webhooks / Event Hub
 
 ---
 
-## 📡 Integração com Ferramentas APM
+## 🧠 Pergunta Estratégica
 
-Plataformas como Dynatrace, Datadog e New Relic podem:
-
-* Coletar dados do Azure
-* Ingerir logs e métricas
-* Integrar alertas
-* Correlacionar aplicações
-
-Modelos de integração:
-
-**Azure → ferramenta**
-Exportação de dados
-
-**Ferramenta → Azure**
-Agente próprio + Azure
-
-**Bidirecional**
-Alertas e eventos
+> Azure Monitor será a ferramenta primária ou complementar?
 
 ---
 
-## 💬 Integração com Microsoft Teams
+## 🔄 Modelos Possíveis
 
-Alertas do Azure Monitor podem enviar notificações para Teams via:
+### Modelo 1 – Azure Monitor como Fonte Primária
 
-* Action Groups
-* Webhooks
-* Logic Apps
+Azure Monitor coleta tudo.
+Ferramenta externa consome ou complementa.
 
-Cenários:
-
-* Canal de incidentes
-* NOC
-* War room
-* On-call
-
-Fluxo:
-
-Azure Monitor Alert
-→ Action Group
-→ Teams
+✔ Melhor integração com Azure
+✔ Menor duplicidade de coleta
 
 ---
 
-## 🧭 Estratégia Multi-Tool de Observabilidade
+### Modelo 2 – Ferramenta Third-Party como Primária
 
-Ambientes corporativos frequentemente usam múltiplas ferramentas.
+Azure Monitor apenas para recursos nativos.
+
+⚠ Pode gerar duplicidade
+⚠ Maior custo
+
+---
+
+### Modelo 3 – Coexistência Segmentada
 
 Exemplo:
 
-* Azure Monitor → infraestrutura Azure
-* Dynatrace → APM avançado
-* SIEM → segurança
-* ITSM → tickets
+* Azure Monitor → Infra e PaaS
+* Datadog → Aplicações específicas
 
-Princípios:
-
-* Evitar duplicação
-* Definir responsabilidade por domínio
-* Centralizar logs críticos
-* Correlacionar alertas
+Exige governança forte.
 
 ---
 
-## 🏛️ Governance no Azure Monitor
+## 🔔 Integração Operacional
 
-Governance garante:
+Alertas podem integrar com:
 
-* Padronização
-* Controle
-* Segurança
-* Custos previsíveis
+* Microsoft Teams
+* ITSM
+* Webhooks
+* Logic Apps
 
-Elementos principais:
+Pergunta-chave:
 
-* Naming padrão
-* Workspaces centralizados
-* DCR reutilizáveis
-* Retenção definida
-* RBAC
-* Policy
+> Todo alerta gera ticket ou só os críticos?
 
 ---
 
-## 💰 Custos no Azure Monitor
+# 💰 Parte 2 – Custos do Log Analytics
 
-Custos principais:
+Aqui você entra no ponto sensível.
 
-* Ingestão de logs
+## O que gera custo?
+
+* Volume de ingestão (GB/dia)
 * Retenção
-* Métricas customizadas
-* Queries frequentes
-* Exportação
-
-Modelo:
-
-GB ingerido/dia
+* Tabelas de alto volume
+* Logs desnecessários
 
 ---
 
-## 📉 Otimização de Custos
-
-Boas práticas:
+## Estratégias de Otimização
 
 * Coletar apenas o necessário
-* Filtrar eventos irrelevantes
-* Ajustar retenção
-* Usar DCR seletivas
-* Arquivar dados antigos
-* Separar dev/prod
+* Usar DCR com critério
+* Ajustar retenção por criticidade
+* Identificar tabelas mais caras
+* Usar métricas quando possível (mais barato que log)
+
+Pergunta estratégica:
+
+> Vocês sabem hoje quanto custa a ingestão mensal?
+
+Se não sabem, há risco de governança.
+
+---
+
+# 🏛️ Parte 3 – Governance
+
+Governança de observabilidade inclui:
+
+* Padrão de agente (AMA)
+* Padrão de DCR
+* Padrão de alertas
+* Padrão de dashboard
+* Política de retenção
+* Responsáveis definidos
+
+---
+
+## Mini-Checklist de Governança
+
+☐ AMA é padrão único
+☐ Workspace definido estrategicamente
+☐ Alertas têm dono
+☐ DCR padronizadas
+☐ Dashboard por perfil definido
+☐ Política de retenção documentada
+
+---
+
+# 🛣️ Parte 4 – Roadmap de Adoção
+
+Aqui você fecha como consultor.
+
+Divida em:
+
+---
+
+## 🔹 Quick Wins (0–30 dias)
 
 Exemplos:
 
-* Eventos Error em vez de Info
-* Perf counters críticos
-* Logs de apps essenciais
+* Padronizar AMA
+* Criar 3 DCR padrão
+* Criar dashboard Application Owner
+* Revisar alertas críticos
 
 ---
 
-## 🗺️ Roadmap de Adoção de Observabilidade
+## 🔹 Médio Prazo (30–90 dias)
 
-Adoção madura ocorre em fases.
-
-### Fase 1 — Fundamentos
-
-* Workspace
-* AMA
-* Métricas básicas
-* Logs centrais
+* Revisão de ingestão
+* Otimização de custo
+* Padronização de telemetria
+* Integração com ITSM
 
 ---
 
-### Fase 2 — Aplicações
+## 🔹 Longo Prazo
 
-* Application Insights
-* Alertas
-* Dashboards
-
----
-
-### Fase 3 — Híbrido
-
-* Azure Arc
-* Infraestrutura completa
-* KQL global
+* Maturidade em SLO
+* Observabilidade orientada a negócio
+* Automação de resposta a incidentes
+* Melhoria contínua
 
 ---
 
-### Fase 4 — Avançado
+# 🧠 Encerramento Estratégico
 
-* IA
-* Automação
-* Multi-tool
-* SRE
+Você pode fechar com:
 
----
+> Observabilidade não é ferramenta.
+> É arquitetura, processo e cultura.
 
-## 🧠 Boas Práticas de Governança
+E depois perguntar:
 
-* Workspace central por ambiente
-* DCR por tipo de recurso
-* Naming consistente
-* Tags obrigatórias
-* Retenção por criticidade
-* Alertas padronizados
+> O que começa amanhã?
 
-> 💡 Observabilidade madura depende mais de governança que de ferramenta.
+Essa pergunta muda comportamento.
 
 ---
 
-## 🎓 Encerramento da Formação
+# 🎯 Resultado Esperado da Sessão 10
 
-Ao longo da formação, você desenvolveu competências em:
+Ao final da formação:
 
-* Observabilidade moderna
-* Azure Monitor
-* Application Insights
-* Infraestrutura híbrida
-* Containers
-* Dados
-* Alertas inteligentes
-* Workbooks e dashboards
-* Governança
-
----
-
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Integrar Azure Monitor com outras plataformas.
-* Definir estratégia multi-tool.
-* Controlar custos de observabilidade.
-* Aplicar governance.
-* Planejar adoção organizacional.
-
----
-
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+* A empresa tem arquitetura definida.
+* Existe padrão de agente.
+* Existe modelo de alertas.
+* Existe modelo de dashboard.
+* Existe estratégia de integração.
+* Existe roadmap claro.

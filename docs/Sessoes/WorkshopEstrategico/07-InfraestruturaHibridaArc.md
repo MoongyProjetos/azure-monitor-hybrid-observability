@@ -1,185 +1,187 @@
 # 📘 Sessão 7 – Infraestrutura Híbrida e Azure Arc
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Compreender o conceito e o papel do Azure Arc em ambientes híbridos.
+* Compreender o papel do Azure Arc na estratégia híbrida.
 * Integrar servidores on-premises ao Azure.
-* Implantar Azure Monitor Agent (AMA) em máquinas híbridas.
-* Definir uma estratégia moderna de agentes em ambientes distribuídos.
+* Aplicar Azure Monitor Agent em ambiente híbrido.
+* Definir padrão organizacional de agentes e coleta.
+* Consolidar modelo unificado de observabilidade.
 
 ---
 
-## 🌐 Desafio da Observabilidade Híbrida
+# 🌍 Parte 1 – O Desafio da Hibridização
 
-Ambientes corporativos raramente são apenas cloud.
+Pergunta inicial:
 
-Cenário típico:
+> Hoje vocês têm visibilidade unificada entre cloud e on-prem?
 
-* Servidores on-premises
-* VMs em múltiplas clouds
-* Containers
-* Recursos Azure
+Problema comum:
 
-Desafios:
+* Azure monitorado
+* On-prem isolado
+* Ferramentas diferentes
+* Padrões diferentes
+* Governança fragmentada
 
-* Visibilidade fragmentada
-* Ferramentas distintas
-* Configuração inconsistente
-* Governança limitada
+Isso gera:
 
-Perguntas comuns:
-
-* Como monitorar on-premises no Azure?
-* Como padronizar agentes?
-* Como centralizar logs?
-* Como aplicar políticas?
+* Visão parcial
+* Falhas silenciosas
+* Duplicidade de ferramenta
 
 ---
 
-## 🧭 O que é Azure Arc?
+# 🧭 Conceitos de Azure Arc
 
-Azure Arc estende o controle do Azure para recursos fora do Azure.
+Azure Arc permite:
 
-Permite gerenciar no Azure:
+* Registrar servidores on-premises no Azure
+* Aplicar políticas
+* Aplicar Azure Monitor Agent
+* Unificar gestão e monitoramento
 
-* Servidores on-premises
-* VMs em outras clouds
-* Kubernetes externos
-* SQL fora do Azure
+Ele transforma:
 
-Na prática:
-
-👉 recursos híbridos aparecem como recursos Azure
-
----
-
-## 🧱 Arquitetura do Azure Arc para Servidores
-
-Fluxo simplificado:
-
-Servidor on-premises
-→ Arc agent
-→ Azure Resource Manager
-→ Azure Monitor / Policy / Defender
-
-O servidor passa a ter:
-
-* Resource ID Azure
-* Tags
-* RBAC
-* Policy
-* Monitoramento
+Servidor físico ou VM on-prem
+em
+Recurso gerenciado no Azure.
 
 ---
 
-## 🔗 Onboarding de Servidores On-Premises
+## Modelo Conceitual
 
-Processo de integração:
+```
+Servidor On-Prem → Azure Arc → Azure Monitor Agent → DCR → Log Analytics
+```
+
+Isso elimina:
+
+* Diferença entre cloud e on-prem
+* Modelo de agente diferente
+* Governança descentralizada
+
+---
+
+# 🛠️ Onboarding de Servidores On-Premises
+
+Processo:
 
 1. Registrar servidor no Azure Arc
-2. Instalar Arc agent
-3. Conectar ao tenant/subscription
-4. Validar no portal
+2. Instalar Azure Monitor Agent
+3. Associar Data Collection Rule
+4. Validar ingestão de dados
 
-Após onboarding:
+Pergunta estratégica:
 
-Servidor aparece em:
-
-Azure → **Azure Arc → Servers**
+> Todos os servidores precisam ser integrados ou só os críticos?
 
 ---
 
-## 📊 Monitoramento Híbrido com AMA
+# 🟢 Azure Monitor Agent em Ambiente Híbrido
 
-Após o servidor estar no Arc:
+Aqui você reforça o padrão:
 
-Pode receber:
+Se já definimos AMA como padrão na cloud…
 
-* Azure Monitor Agent
-* Data Collection Rules
-* Policy
-* Extensions
+Ele também deve ser padrão no on-prem.
 
-Fluxo:
+Isso evita:
 
-Servidor Arc
-→ AMA
-→ Log Analytics
-→ Azure Monitor
+* Dois modelos de coleta
+* Dois padrões de alerta
+* Dois modelos de retenção
 
 ---
 
-## 🚀 Azure Monitor Agent em Ambientes Híbridos
+# 🧠 Estratégia Moderna de Agentes
 
-O AMA é o agente unificado para:
+Momento arquitetural da sessão.
 
-* VMs Azure
-* Servidores Arc
-* Ambientes híbridos
+Você conduz perguntas como:
 
-Benefícios:
+1. Vamos padronizar AMA como único agente?
+2. Vamos centralizar DCR?
+3. Vamos usar workspace único?
+4. Vamos segmentar por ambiente?
+5. Vamos definir retenção padrão?
 
-* Configuração centralizada
-* Reutilização de DCR
-* Escala
-* Consistência
-* Governança
+Esse é o momento onde você começa a desenhar o modelo oficial.
 
 ---
 
-## 🧭 Estratégia Moderna de Agentes
+# 🛠️ Hands-on Estratégico
 
-Abordagem recomendada:
+Se tiver ambiente disponível:
 
-**1️⃣ Padronizar AMA**
-Substituir agentes legados
+* Registrar uma VM via Arc
+* Aplicar AMA
+* Associar DCR
+* Consultar logs no workspace
 
-**2️⃣ Centralizar via DCR**
-Configuração reutilizável
+Se não tiver:
 
-**3️⃣ Associar por escopo**
-Subscription / RG / Tag
-
-**4️⃣ Governança via Policy**
-Implantação automática
-
----
-
-## 🧠 Boas Práticas em Ambientes Híbridos
-
-* Usar Arc como camada de controle
-* Padronizar AMA em todos os servidores
-* Separar DCR por tipo de workload
-* Usar tags para associação
-* Centralizar em Log Analytics
-* Automatizar via Policy
-
-> 💡 Azure Arc transforma servidores externos em recursos nativos do Azure.
+* Demonstração guiada
+* Simulação arquitetural
+* Discussão estratégica
 
 ---
 
-## 🧭 Casos de Uso do Azure Arc + Monitor
+# 📊 Consolidação da Arquitetura Unificada
 
-* Monitorar datacenter on-premises
-* Unificar visibilidade multi-cloud
-* Aplicar políticas de segurança
-* Coletar logs centralizados
-* Monitorar legado fora do Azure
+Você pode desenhar algo assim:
 
----
+```
+Aplicações → App Insights
+Containers → Container Insights
+Infra Cloud → AMA + DCR
+Infra On-Prem → Arc + AMA + DCR
+Logs → Log Analytics
+Alertas → Azure Monitor
+Dashboards → Workbooks
+```
 
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* O papel do Azure Arc em ambientes híbridos.
-* Como integrar servidores on-premises ao Azure.
-* Uso do Azure Monitor Agent em híbrido.
-* Estratégias modernas de agentes.
-* Governança e monitoramento unificado.
-
-Na próxima sessão, vamos aplicar esses conceitos na **centralização de logs e alertas em ambientes híbridos**.
+Isso é modelo completo.
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🧩 Discussão Estratégica (15 min)
+
+Perguntas fundamentais:
+
+1. Hoje há diferença entre monitoramento cloud e on-prem?
+2. Existe ferramenta diferente para on-prem?
+3. Existe duplicidade de custo?
+4. Existe governança formal de coleta?
+5. Existe padrão mínimo por tipo de servidor?
+
+Aqui você praticamente fecha a seção de Arquitetura no documento estratégico.
+
+---
+
+# 🧠 Conexão com Sessão 8
+
+Agora que já temos:
+
+* Modelo unificado
+* Agente padronizado
+* DCR como política
+* Infra cloud e híbrida integradas
+
+Na próxima sessão vamos aprofundar:
+
+> Logs e alertas avançados em ambientes híbridos.
+
+---
+
+# 🎯 Resultado Esperado da Sessão 7
+
+Ao final desta sessão:
+
+* A empresa entende como unificar monitoramento.
+* AMA passa a ser visto como padrão único.
+* Azure Arc deixa de ser “extra” e vira peça estratégica.
+* O modelo híbrido começa a ganhar forma oficial.
+

@@ -1,225 +1,206 @@
 # 📘 Sessão 9 – Dashboards e Workbooks por Perfil
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Criar dashboards no Azure Monitor orientados por perfil.
-* Construir Workbooks para Application Owners e IT Ops/SRE.
-* Selecionar métricas e logs relevantes por persona.
-* Aplicar boas práticas de visualização operacional.
+* Diferenciar dashboards operacionais de dashboards estratégicos.
+* Criar visões específicas para Application Owners.
+* Criar visões operacionais para IT Ops / SRE.
+* Aplicar boas práticas de visualização.
+* Formalizar modelo de visualização por persona na organização.
 
 ---
 
-## 👥 Observabilidade Orientada a Personas
+# 🧠 Parte 1 – Por que Dashboards por Perfil?
 
-Diferentes perfis consomem observabilidade de forma distinta:
+Pergunta inicial:
 
-**Application Owners**
-Foco em experiência e aplicação
+> Hoje todos enxergam o mesmo dashboard?
 
-**IT Ops / SRE**
-Foco em infraestrutura e disponibilidade
+Problema comum:
 
-**Gestão**
-Foco em SLA e saúde geral
+* Dashboard único para tudo
+* Informações demais
+* Falta de foco
+* Falta de responsabilidade
 
-Um bom dashboard responde:
-
-👉 O que importa para este perfil?
-👉 O que precisa ação?
-👉 O que indica risco?
+Visualização correta não é técnica.
+É organizacional.
 
 ---
 
-## 📊 Dashboards no Azure Monitor
+# 👤 Persona 1 – Application Owners
 
-Dashboards são visões rápidas com:
+Application Owner quer responder:
 
-* Métricas
-* Gráficos
-* Logs
-* Estado de recursos
-* Alertas
-
-Usados para:
-
-* NOC
-* Operação diária
-* War room
-* Status geral
+* A aplicação está saudável?
+* O usuário está sendo impactado?
+* Existe degradação?
+* Estamos cumprindo SLA?
 
 ---
 
-## 📘 Azure Monitor Workbooks
+## 📊 Dashboard para Application Owners
 
-Workbooks são visões analíticas interativas com:
+Deve conter:
 
-* Métricas
-* KQL
-* Filtros
-* Parâmetros
-* Gráficos
-* Tabelas
-
-Permitem:
-
-* Exploração
-* Diagnóstico
-* Observabilidade profunda
-* Drill-down
-
----
-
-## 🧑‍💻 Dashboard para Application Owners
-
-Objetivo:
-
-Experiência e saúde da aplicação.
-
-Métricas típicas:
-
-* Requests
-* Latência
+* SLA / Disponibilidade
 * Taxa de erro
-* Dependências
-* Disponibilidade
+* Latência média
+* Apdex (se aplicável)
+* Volume de requisições
+* Incidentes recentes
 
-Exemplos de visualização:
+Não deve conter:
 
-* Latência média e P95
+* CPU de node
+* Métricas técnicas profundas
+* Logs brutos
+
+> Foco em impacto no negócio.
+
+---
+
+# 🛠️ Hands-on 1 – Criar Workbook para Application Owner
+
+Componentes recomendados:
+
+* Gráfico de disponibilidade
+* Percentual de erro por intervalo
+* Latência média
 * Requests por minuto
-* Falhas por endpoint
-* Dependências lentas
+* Mapa de dependências (Application Map)
+
+Pergunta estratégica:
+
+> Esse dashboard permitiria ao dono da aplicação tomar decisão rápida?
 
 ---
 
-## ⚙️ Dashboard para IT Ops / SRE
+# 👷 Persona 2 – IT Ops / SRE
 
-Objetivo:
+IT Ops quer responder:
 
-Saúde da infraestrutura.
+* Infra está saudável?
+* Existe risco de capacidade?
+* Existe alerta ativo?
+* Algum agente parou de enviar logs?
 
-Métricas típicas:
+---
 
-* CPU servidores
-* Memória
-* Pods running
-* Storage latency
-* Servidores offline
+## 📊 Dashboard para IT Ops / SRE
 
-Visualizações:
+Deve conter:
 
-* CPU por servidor
-* Nós AKS
-* Heartbeat
+* Saúde de infraestrutura
+* Uso de CPU / Memória
+* Status de nodes AKS
+* Restart de containers
 * Alertas ativos
-* Capacidade
+* Tendência de consumo
 
 ---
 
-## 📊 Workbooks por Persona
+# 🛠️ Hands-on 2 – Criar Workbook Operacional
 
-Workbooks permitem separar visões:
+Componentes recomendados:
 
-**Workbook App**
-Requests, erros, UX
+* Lista de alertas ativos
+* CPU média por VM
+* Uso de memória
+* Restart count em AKS
+* Tendência de ingestão de logs
 
-**Workbook Infra**
-CPU, memória, nós
+Pergunta estratégica:
 
-**Workbook Híbrido**
-Azure + Arc
-
-**Workbook Containers**
-AKS
+> Esse dashboard ajuda a prevenir incidente ou só reagir?
 
 ---
 
-## 🔎 Exemplos de Queries para Workbooks
+# 📘 Workbooks vs Dashboards
 
-### Latência por aplicação
+## Dashboards
 
-```kql
-requests
-| summarize avg(duration), p95=percentile(duration,95) by name
-```
+* Visão rápida
+* Mais simples
+* Ideal para painel contínuo
 
----
+## Workbooks
 
-### CPU por servidor
+* Interativos
+* Consultas avançadas
+* Filtros dinâmicos
+* Personalização por ambiente
 
-```kql
-Perf
-| where CounterName == "% Processor Time"
-| summarize avg(CounterValue) by Computer
-```
-
----
-
-### Servidores offline
-
-```kql
-Heartbeat
-| summarize LastSeen=max(TimeGenerated) by Computer
-| where LastSeen < ago(10m)
-```
+> Workbooks são ferramenta estratégica.
+> Dashboards são ferramenta operacional.
 
 ---
 
-## 🎨 Boas Práticas de Visualização
+# 🎨 Boas Práticas de Visualização
 
-* Mostrar o que exige ação
-* Evitar excesso de gráficos
-* Agrupar por domínio
-* Usar cores consistentes
-* Destacar anomalias
-* Separar persona
+### 1️⃣ Menos é mais
 
----
+Evitar excesso de gráficos.
 
-## 🧭 Estrutura Recomendada de Workbooks
+### 2️⃣ Começar pelo que dói
 
-**Seção 1 – Saúde Geral**
-Status e KPIs
+Primeiro indicadores críticos.
 
-**Seção 2 – Performance**
-Latência / CPU
+### 3️⃣ Hierarquia clara
 
-**Seção 3 – Falhas**
-Erros
+Crítico → Alto → Médio → Informativo
 
-**Seção 4 – Capacidade**
-Uso
+### 4️⃣ Nomeação padronizada
 
-**Seção 5 – Detalhe**
-Tabela
+Exemplo:
+
+* WB-APP-Prod-Health
+* WB-Ops-Infra-Overview
+
+### 5️⃣ Separação por ambiente
+
+Dev ≠ Produção
 
 ---
 
-## 🧠 Erros Comuns em Dashboards
+# 🧩 Discussão Estratégica (15 min)
 
-* Métricas irrelevantes
-* Dados demais
-* Sem contexto
-* Sem severidade
-* Sem persona
-* Sem atualização
+Perguntas importantes:
 
-> 💡 Um dashboard bom permite decidir em segundos.
+1. Quem é dono do dashboard?
+2. Quem mantém?
+3. Existe revisão periódica?
+4. Dashboard substitui alerta?
+5. Existe visão executiva necessária?
 
----
+Aqui você começa a fechar:
 
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Diferença entre dashboards e workbooks.
-* Métricas por perfil operacional.
-* Como estruturar visões por persona.
-* Boas práticas de visualização.
-* Queries úteis para observabilidade.
-
-Na próxima sessão, vamos aplicar esses conceitos na **integração do Azure Monitor com outras plataformas e governance**.
+Seção de Visualização do documento estratégico.
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🔗 Conexão com Sessão 10
+
+Agora que temos:
+
+* Coleta padronizada
+* Alertas inteligentes
+* Monitoramento de apps, dados e containers
+* Dashboards por perfil
+
+Falta fechar:
+
+> Integrações, custos e governança.
+
+---
+
+# 🎯 Resultado Esperado da Sessão 9
+
+Ao final desta sessão:
+
+* A empresa tem modelo claro de visualização por persona.
+* Dashboards deixam de ser genéricos.
+* Responsabilidade começa a ser definida.
+* Observabilidade começa a virar cultura, não só ferramenta.

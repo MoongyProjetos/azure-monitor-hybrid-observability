@@ -1,195 +1,207 @@
 # 📘 Sessão 4 – Alertas Inteligentes e Análise com IA
 
+---
+
 ## 🎯 Objetivos da Sessão
 
-* Criar alertas baseados em métricas e logs no Azure Monitor.
-* Escrever queries KQL para detecção de condições operacionais.
-* Compreender o funcionamento do Smart Detection no Application Insights.
-* Aplicar Dynamic Thresholds para redução de falsos positivos.
-* Utilizar recursos de IA para análise assistida de causa raiz.
+* Criar alertas baseados em métricas e logs.
+* Desenvolver consultas KQL para cenários operacionais.
+* Aplicar Smart Detection no Application Insights.
+* Utilizar Dynamic Thresholds para reduzir ruído.
+* Compreender análise assistida para identificação de causa raiz.
+* Iniciar a definição de um modelo organizacional de alertas.
 
 ---
 
-## 🔔 Alertas no Azure Monitor
+# 🚨 Parte 1 – O que é um Alerta de Verdade?
 
-Alertas permitem detectar automaticamente condições anormais em aplicações e infraestrutura.
+Antes de criar alertas, você precisa provocar:
 
-Podem ser baseados em:
+Pergunta para o grupo:
 
-* Métricas
-* Logs (KQL)
-* Activity Log
-* Application Insights
-
-Estrutura de um alerta:
-
-**Signal (sinal)** → dado monitorado
-**Condition (condição)** → regra de disparo
-**Action Group** → notificação/automação
+> Vocês recebem alertas demais ou de menos?
 
 ---
 
-## 📊 Alertas de Métricas
+## 📌 Princípios de um Alerta Eficaz
 
-Baseados em séries temporais numéricas.
+Um alerta deve ser:
+
+* Acionável
+* Claro
+* Ter responsável definido
+* Contextualizado
+* Raro o suficiente para ser levado a sério
+
+> Alerta não é notificação.
+> Alerta é gatilho operacional com responsabilidade definida.
+
+---
+
+# 📊 Alertas Baseados em Métricas
+
+Ideais para:
+
+* CPU alta
+* Uso de memória
+* Latência acima do esperado
+* Percentual de erro
 
 Características:
 
-* Baixa latência
-* Próximo do tempo real
-* Ideal para infraestrutura e performance
-
-Exemplos:
-
-* CPU > 80%
-* Latência média > 2s
-* Taxa de erro > 5%
+* Rápidos
+* Simples
+* Baixo custo
 
 ---
 
-## 📜 Alertas de Logs (KQL)
+# 📄 Alertas Baseados em Logs (KQL)
 
-Baseados em consultas sobre dados no Log Analytics ou Application Insights.
+Mais poderosos e flexíveis.
 
-Vantagens:
+Permitem:
 
-* Alta flexibilidade
-* Contexto rico
 * Detecção de padrões complexos
+* Erros específicos
+* Combinação de múltiplas condições
+* Lógica customizada
 
-Exemplo:
+Exemplo conceitual:
 
-```kql
+```
 requests
-| where success == false
-| summarize count() by bin(timestamp, 5m)
-| where count_ > 10
+| where resultCode == "500"
+| summarize count() by bin(TimeGenerated, 5m)
 ```
 
-Detecta: mais de 10 falhas em 5 minutos.
+Aqui você mostra que:
+
+KQL transforma log em inteligência.
 
 ---
 
-## 🔎 Queries KQL para Observabilidade
+# 🛠️ Hands-on 1 – Criando Alertas
 
-KQL (Kusto Query Language) é a linguagem de consulta do Azure Monitor.
+1. Criar alerta baseado em métrica (ex: erro > 5%)
+2. Criar alerta baseado em KQL
+3. Configurar Action Group
+4. Testar disparo
 
-Usos principais:
+Pergunta estratégica:
 
-* Investigar incidentes
-* Criar alertas
-* Analisar telemetria
-* Detectar anomalias
-
-Exemplo – latência média por endpoint:
-
-```kql
-requests
-| summarize avg(duration) by name
-| sort by avg_duration desc
-```
+> Quem deve receber esse alerta? Dev? Ops? Ambos?
 
 ---
 
-## 🤖 Smart Detection (Application Insights)
+# 🤖 Parte 2 – IA Aplicada à Observabilidade
 
-Smart Detection usa IA para identificar automaticamente padrões anormais na aplicação.
+Agora vem a virada de maturidade.
 
-Detecta:
+---
 
-* Aumento anormal de falhas
+## 🔎 Smart Detection (Application Insights)
+
+Detecta automaticamente:
+
 * Degradação de performance
-* Mudança de comportamento
-* Falhas em dependências
+* Aumento incomum de falhas
+* Mudanças no padrão de requisições
 
-Características:
+Sem necessidade de regra manual.
 
-* Baseado em histórico
-* Sem configuração manual
-* Orientado à experiência do usuário
+Pergunta:
 
-Exemplo de insight:
-
-> “Taxa de falhas aumentou 230% nas últimas 2h”
+> Vocês preferem criar 50 alertas fixos ou deixar o sistema aprender padrão?
 
 ---
 
 ## 📈 Dynamic Thresholds
 
-Dynamic Thresholds criam limites automáticos baseados no comportamento histórico do sistema.
-
 Em vez de:
 
-👉 CPU > 80% (fixo)
+CPU > 80%
 
-O Azure aprende:
+O sistema aprende:
 
-👉 padrão normal da CPU
-👉 variação diária/semanal
-👉 sazonalidade
-
-E alerta quando há desvio estatístico.
+Qual é o comportamento normal daquele recurso.
 
 Benefícios:
 
-* Menos falsos positivos
-* Ajuste automático
-* Sensível a padrões reais
+* Redução de falso positivo
+* Detecção mais contextual
+* Menos ruído
 
 ---
 
-## 🧠 Análise Assistida de Causa Raiz
+# 🔍 Parte 3 – Análise Assistida de Causa Raiz
 
-O Azure Monitor e Application Insights ajudam a correlacionar sinais automaticamente:
+Aqui você conecta tudo:
 
-* Requests
-* Dependências
-* Exceções
-* Deploys
-* Infraestrutura
+Exemplo prático:
 
-Recursos:
+1. Usuário relata lentidão
+2. Ver latência média
+3. Identificar dependência lenta
+4. Correlacionar exceção
+5. Confirmar padrão recorrente
 
-* Smart Detection insights
-* Application Map
-* Failures analysis
-* Transaction search
+Application Map ajuda a visualizar dependências.
 
-Objetivo:
-
-Responder rapidamente:
-
-👉 O que quebrou?
-👉 Onde começou?
-👉 O que mudou?
+Você ensina o fluxo de investigação moderno.
 
 ---
 
-## 🧭 Boas Práticas de Alertas Inteligentes
+# 🧩 Discussão Estratégica (15 min)
 
-* Alertar impacto no usuário, não só infraestrutura
-* Preferir métricas para tempo real
-* Usar logs para contexto
-* Evitar thresholds fixos arbitrários
-* Usar severidade consistente
-* Reduzir ruído operacional
+Perguntas críticas:
 
-> 💡 Um bom alerta indica impacto real e ação necessária.
+1. Hoje vocês usam threshold fixo ou dinâmico?
+2. Quem define o que gera alerta?
+3. Existe processo de revisão de alertas?
+4. Existe análise pós-incidente?
+5. Alertas estão ligados a SLA?
 
----
+Aqui você começa a construir:
 
-## ✅ Conclusão da Sessão
-
-Nesta sessão, você aprendeu:
-
-* Diferença entre alertas de métricas e logs.
-* Como usar KQL para detecção operacional.
-* Funcionamento do Smart Detection.
-* Vantagens de Dynamic Thresholds.
-* Como a IA ajuda na análise de causa raiz.
-
-Na próxima sessão, vamos aplicar esses conceitos na **monitorização de dados e serviços de storage no Azure**.
+Modelo oficial de alertas da empresa.
 
 ---
 
-> © MoOngy 2026 | Programa de formação em Observabilidade com Azure Monitor
+# 🧱 Mini-Framework que Você Pode Introduzir
+
+### Classificação de Alertas
+
+🔴 Crítico – Impacto direto no usuário
+🟠 Alto – Degradação significativa
+🟡 Médio – Atenção necessária
+🔵 Informativo – Apenas dashboard
+
+Isso ajuda na governança.
+
+---
+
+# 🔗 Conexão com as Próximas Sessões
+
+Agora que sabemos:
+
+* Criar alertas inteligentes
+* Reduzir ruído
+* Investigar causa raiz
+
+Nas próximas sessões vamos aplicar isso em:
+
+* SQL
+* Storage
+* Containers
+* Infraestrutura híbrida
+
+---
+
+# 🎯 Resultado Esperado da Sessão 4
+
+Ao final desta sessão:
+
+* O grupo entende diferença entre alerta simples e alerta inteligente.
+* Redução de alert fatigue passa a ser prioridade.
+* IA é vista como ferramenta prática, não marketing.
+* A base da estratégia de alertas da empresa começa a se consolidar.
