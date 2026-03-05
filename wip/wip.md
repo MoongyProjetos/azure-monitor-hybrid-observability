@@ -127,3 +127,8 @@ https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/manage/monitor
 https://www.youtube.com/watch?v=XN4A-jNZ5Tk&t=63s
 
 https://www.youtube.com/watch?v=v68jL-l9Fww
+
+
+https://turbo360.com/guide/microsoft-azure-monitoring
+
+https://azure.microsoft.com/en-us/blog/7-best-practices-for-continuous-monitoring-with-azure-monitor/
