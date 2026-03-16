@@ -9,7 +9,34 @@
 
 ---
 
+## 👨‍🏫 Sobre o Formador
+
+![alt text](Documentação/Imagens/jonatasia.png)
+
+**Jônatas Afonso** é **Microsoft Certified Trainer (MCT)** com mais de **20 anos de experiência em tecnologia**, tendo atuado em projetos de desenvolvimento de software em **4 países** e mais de **10 empresas diferentes**.
+Ao longo da carreira, trabalhou com arquitetura de soluções, DevOps, automação em larga escala e plataformas cloud — com destaque para **Azure**, **Azure DevOps**, **SonarQube**, **Azure Data Explorer** e o ecossistema .NET.
+
+Apaixonado por ensino e pela evolução da plataforma Microsoft, ministra formações técnicas com foco em **clareza, aplicabilidade e prática real**, além de forte alinhamento com tendências modernas como **Cloud-Native**, **AOT**, **DevOps** e **IA aplicada**.
+
+Outras curiosidades que ajudam a entender o estilo do formador:
+
+* Vive em **Portugal (Lisboa)**
+* É brasileiro e prefere clima mais frio
+* É **pai** de uma filha de 6 anos
+* Pedala regularmente 
+* Gosta de **metodologias ágeis**, **boas práticas de desenvolvimento**, **cloud computing** e **AI generativa**
+* Valoriza **performance** e **produtividade** em código
+* Prefere explicações **menos formais**, diretas e com sotaque **carioca**
+* Apreciador de boa argumentação e pensamento técnico
+
+O objetivo principal nas formações é **capacitar profissionais para um uso moderno, eficiente e pragmático** das tecnologias da Microsoft — sempre com foco em performance, produtividade e boas práticas.
+
+---
+
 ## 🧭 Apresentação do Curso
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 
 ### Objetivo Geral
 
