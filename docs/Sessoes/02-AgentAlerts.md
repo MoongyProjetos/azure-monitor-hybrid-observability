@@ -165,78 +165,27 @@ Eventos de controlo do Azure:
 * Usar severidades consistentes
 
 ---
-Para associar **Azure Monitor Agent (AMA)** e um **Data Collection Rule (DCR)** a uma VM no **Microsoft Azure**, o processo tem **2 passos principais**:
+No passado, para associar **Azure Monitor Agent (AMA)** e um **Data Collection Rule (DCR)** a uma VM no **Microsoft Azure**, o processo tinha **2 passos principais**:
 
 1️⃣ Instalar o **Azure Monitor Agent** na VM
 2️⃣ Associar a VM a um **Data Collection Rule**
 
-Vou te mostrar os métodos mais comuns.
+Agora o processo mudou.
+Os passos são:
 
----
+1️⃣ Criar uma Data Colection Rule
+![alt text](image.png)
 
-# 1️⃣ Instalar o Azure Monitor Agent na VM
+O processo de criação de DCR já faz a instalação do AMA nas máquinas virtuais.
 
-### Pelo Portal Azure (mais simples)
+![alt text](image-1.png)
 
-1. Vai em **Virtual Machines**
-2. Abre a VM
-3. Menu **Extensions + applications**
-4. **Add**
-5. Escolhe:
+Deve-se ter atenção para visualizar se todos os componentes estão de fato conectados.
+A fonte de informação é a máquina virtual, com os seus contadores de performance e logs de eventos e o destino passa a ser um log analytics workspace.
 
-* **Azure Monitor Agent**
+![alt text](image-2.png)
 
-Instala a extensão:
-
-* `AzureMonitorWindowsAgent` (Windows)
-* `AzureMonitorLinuxAgent` (Linux)
-
----
-
-# 2️⃣ Associar o Data Collection Rule (DCR)
-
-Depois do agente instalado, precisa **associar a VM ao DCR**.
-
-### Pelo Portal
-
-1. Vai em **Monitor**
-2. **Data Collection Rules**
-3. Abre o DCR
-4. **Resources**
-5. **Add**
-6. Seleciona a **VM**
-
-Isso cria automaticamente uma **Data Collection Rule Association (DCRA)**.
-
----
-
-# 3️⃣ Via Azure CLI (muito usado em automação)
-
-Associar um DCR a uma VM:
-
-```bash
-az monitor data-collection rule association create \
-  --name myDCRAssociation \
-  --rule-id /subscriptions/<subId>/resourceGroups/<rg>/providers/Microsoft.Insights/dataCollectionRules/<dcrName> \
-  --resource /subscriptions/<subId>/resourceGroups/<rg>/providers/Microsoft.Compute/virtualMachines/<vmName>
-```
-
----
-
-# 4️⃣ Via ARM / Bicep (infra as code)
-
-Exemplo **Bicep**:
-
-```bicep
-resource dcrAssociation 'Microsoft.Insights/dataCollectionRuleAssociations@2021-04-01' = {
-  name: 'myAssociation'
-  scope: vm
-  properties: {
-    dataCollectionRuleId: dcr.id
-  }
-}
-```
-
+Os eventos de máquina são controlados a nível do LAW.
 ---
 
 # Arquitetura final
