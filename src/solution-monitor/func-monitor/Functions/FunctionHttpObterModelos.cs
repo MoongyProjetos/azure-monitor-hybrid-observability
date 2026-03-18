@@ -23,11 +23,14 @@ public class FunctionHttpObterModelos
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-        var dados = _context.ProductModels.Select(x => new
-        {
-            x.ProductModelId,
-            x.Name
-        }).Take(100).ToList();
+        var dados = _context.ProductModels.OrderByDescending(x => x.ModifiedDate)
+        .Select(x => new
+            {
+                x.ProductModelId,
+                x.Name,
+                x.ModifiedDate
+            })
+        .Take(100).ToList();
 
         return new OkObjectResult(dados);
     }

@@ -26,6 +26,7 @@ else
                 <th>Id</th>
                 <th>Nome</th>
                 <th>Descrição</th>
+                <th>Data Modificação</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,7 @@ else
                     <td>@modelo.ProductModelId</td>
                     <td>@modelo.Name</td>
                     <td>@modelo.CatalogDescription</td>
+                    <td>@modelo.ModifiedDate?.ToString("yyyy-MM-dd => HH:mm:ss")</td>
                 </tr>
             }
         </tbody>
@@ -55,6 +57,14 @@ else
         // url = "https://func-monitor-brz-jaon.azurewebsites.net/api/ObterModelos";
 
         var response = await http.GetAsync(url);
+
+        var rand = new Random().Next(0,100);
+        if(rand == 17 || rand == 13)
+        {
+            _logger.LogError("Erro simulado para teste de Application Insights 🚨");
+            throw new Exception("Erro simulado para teste de Application Insights");
+        }
+
 
         if (response.IsSuccessStatusCode)
         {
