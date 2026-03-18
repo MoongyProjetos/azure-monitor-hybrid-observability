@@ -7,6 +7,11 @@
 * Explorar métricas, logs e traces de aplicações.
 * Analisar telemetria orientada à experiência do utilizador.
 
+
+![alt text](image-3.png)
+
+
+
 ---
 
 ## ☁️ Monitorização de Aplicações no Azure

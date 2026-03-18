@@ -60,10 +60,10 @@ Vantagens:
 Exemplo:
 
 ```kql
-requests
-| where success == false
-| summarize count() by bin(timestamp, 5m)
-| where count_ > 10
+AppRequests
+| where Success == false
+| summarize count() by bin(TimeGenerated, 5m)
+| where count_ > 5
 ```
 
 Detecta: mais de 10 falhas em 5 minutos.
@@ -84,9 +84,11 @@ Usos principais:
 Exemplo – latência média por endpoint:
 
 ```kql
-requests
-| summarize avg(duration) by name
-| sort by avg_duration desc
+AppRequests
+| where Name contains "/weather"
+    or Name contains "/counter"    
+| summarize avg(DurationMs) by Name
+| sort by avg_DurationMs desc
 ```
 
 ---
