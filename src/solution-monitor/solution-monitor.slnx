@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/content/">
+    <File Path="exemplo.json" />
+  </Folder>
+  <Project Path="func-monitor/func-monitor.csproj" />
+  <Project Path="webapp-monitor/webapp-monitor.Client/webapp-monitor.Client.csproj" />
+  <Project Path="webapp-monitor/webapp-monitor/webapp-monitor.csproj" />
+</Solution>

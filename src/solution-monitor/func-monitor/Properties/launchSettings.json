@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "func_monitor": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7089",
+      "launchBrowser": false
+    }
+  }
+}
