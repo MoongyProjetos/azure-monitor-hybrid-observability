@@ -56,7 +56,7 @@ public class FunctionEventhubCriarModeloNovo
         {
             //Para evitar duplicatas, vamos adicionar a data e hora de recebimento ao nome do modelo.
             //Assim, mesmo que o mesmo produto seja recebido várias vezes, ele será registrado como um novo modelo no banco de dados.
-            produtoModel.Name = ($"{produtoModel.Name}-{id}").Substring(0, 50);
+            produtoModel.Name = $"{produtoModel.Name}-{id}"[..50];
             _context.ProductModels.Add(produtoModel);
         }
     }
