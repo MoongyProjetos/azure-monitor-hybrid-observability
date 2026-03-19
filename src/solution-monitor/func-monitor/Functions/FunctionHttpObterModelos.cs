@@ -28,6 +28,7 @@ public class FunctionHttpObterModelos
             {
                 x.ProductModelId,
                 x.Name,
+                x.CatalogDescription,
                 x.ModifiedDate
             })
         .Take(100).ToList();
