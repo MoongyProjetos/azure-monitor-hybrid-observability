@@ -1,6 +1,7 @@
+using Azure.Identity;
 using webapp_monitor.Client.Pages;
 using webapp_monitor.Components;
-using Azure.Identity;
+using webapp_monitor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsigh
     ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
 });
 builder.Logging.AddApplicationInsights();
+
+builder.Services.AddScoped<AppInsightsService>();
 
 var app = builder.Build();
 

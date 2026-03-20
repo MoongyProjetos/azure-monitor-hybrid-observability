@@ -1,5 +1,22 @@
 ﻿@page "/"
 
+<script>
+    var appInsights = window.appInsights || function (config) {
+        function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } }
+        var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f;
+        for (s.src = config.url || "https://js.monitor.azure.com/scripts/b/ai.2.min.js",
+            u.getElementsByTagName(o)[0].parentNode.appendChild(s),
+            t.queue = [], i = ["trackPageView"],
+            f = 0; f < i.length; f++) r(i[f]);
+        return t
+    }({
+        connectionString: "InstrumentationKey=a4321f50-1416-4091-bf59-e25048419283;IngestionEndpoint=https://brazilsouth-1.in.applicationinsights.azure.com/;LiveEndpoint=https://brazilsouth.livediagnostics.monitor.azure.com/;ApplicationId=12aa5250-bb68-4c36-bc79-0e945b14b7dd"
+    });
+
+    window.appInsights = appInsights;
+    appInsights.trackPageView();
+</script>
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
