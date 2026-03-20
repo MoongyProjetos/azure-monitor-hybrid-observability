@@ -1,20 +1,9 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
-
-namespace func_monitor.Functions;
-
-public class FunctionHttpHealth
+namespace func_monitor.Functions;public class FunctionHttpHealth
 {
-    private readonly ILogger<FunctionHttpHealth> _logger;
-
-    public FunctionHttpHealth(ILogger<FunctionHttpHealth> logger)
+    private readonly ILogger<FunctionHttpHealth> _logger;    public FunctionHttpHealth(ILogger<FunctionHttpHealth> logger)
     {
         _logger = logger;
-    }
-
-    [Function("healthy")]
+    }    [Function("healthy")]
     public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");

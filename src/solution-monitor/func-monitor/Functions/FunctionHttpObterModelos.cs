@@ -1,29 +1,14 @@
-using func_monitor.DB;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
-using System;
-
-namespace func_monitor.Functions;
-
-public class FunctionHttpObterModelos
+namespace func_monitor.Functions;public class FunctionHttpObterModelos
 {
     private readonly ILogger<FunctionHttpObterModelos> _logger;
-    private readonly AdventureWorksDBContext _context;
-
-    public FunctionHttpObterModelos(ILogger<FunctionHttpObterModelos> logger, AdventureWorksDBContext context)
+    private readonly AdventureWorksDBContext _context;    public FunctionHttpObterModelos(ILogger<FunctionHttpObterModelos> logger, AdventureWorksDBContext context)
     {
         _logger = logger;
         _context = context;
-    }
-
-    [Function("ObterModelos")]
+    }    [Function("ObterModelos")]
     public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
-
-        var dados = _context.ProductModels.OrderByDescending(x => x.ModifiedDate)
+        _logger.LogInformation("C# HTTP trigger function processed a request.");        var dados = _context.ProductModels.OrderByDescending(x => x.ModifiedDate)
         .Select(x => new
             {
                 x.ProductModelId,
@@ -31,8 +16,6 @@ public class FunctionHttpObterModelos
                 x.CatalogDescription,
                 x.ModifiedDate
             })
-        .Take(100).ToList();
-
-        return new OkObjectResult(dados);
+        .Take(100).ToList();        return new OkObjectResult(dados);
     }
 }

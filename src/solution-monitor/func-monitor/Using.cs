@@ -1,0 +1,10 @@
+﻿global using Azure.Messaging.EventHubs;
+global using func_monitor.DB;
+global using func_monitor.Models;
+global using Microsoft.Azure.Functions.Worker;
+global using Microsoft.Extensions.Logging;
+global using System.Text;
+global using System.Text.Json;
+global using Azure.Storage.Blobs;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
