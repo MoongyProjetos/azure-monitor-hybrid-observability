@@ -1,4 +1,4 @@
-# 📘 Sessão 10 – Integrações, Containers, Custos e Governance
+# 📘 Sessão 11 – Integrações, Containers, Custos e Governance
 
 # PARTE I — LABORATÓRIO PRÁTICO: OBSERVABILIDADE END-TO-END NO AZURE
 
